@@ -3894,7 +3894,7 @@ MonoBehaviour:
     CO\u2082. Then the panels are ready to absorb more CO\u2082."
   vaccumText: "4) After the CO\u2082 is released from the panels, a vacuum sucks
     the CO\u2082 inside the sealed box and stores it in a canister. Once all the
-    CO\u2082 has been stored, the DAC reopens and the process repeats. The stored
+    CO\u2082 has been stored, the DACC reopens and the process repeats. The stored
     CO\u2082 can be used in urban farms, where it is absorbed by plants and increases
     crop yield."
   currentState: 0
