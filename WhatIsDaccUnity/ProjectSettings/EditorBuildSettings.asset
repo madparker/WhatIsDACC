@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/OpenAir/Scenes/AutomatedDaccWithLookingGlass.unity
     guid: d883a4fe6d39c477bbb7b083dde85389
-  - enabled: 1
+  - enabled: 0
     path: Assets/OpenAir/LogoScene.unity
     guid: 83b13b110831c4764820fa6c567387cb
+  - enabled: 1
+    path: Assets/OpenAir/Scenes/AlexTestScene.unity
+    guid: 2b5302df0cf3f1a4c83265775f8f2c14
   m_configObjects: {}

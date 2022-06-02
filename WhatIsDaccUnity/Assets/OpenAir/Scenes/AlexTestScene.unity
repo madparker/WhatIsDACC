@@ -664,7 +664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130358116}
   m_LocalRotation: {x: -0, y: -0, z: 0.000000014901159, w: 1}
-  m_LocalPosition: {x: 0.497, y: -0.438, z: 0}
+  m_LocalPosition: {x: 0.659, y: -0.55, z: 0}
   m_LocalScale: {x: 0.26, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 1293906585}
@@ -3325,7 +3325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -150}
+  m_AnchoredPosition: {x: -250, y: -124}
   m_SizeDelta: {x: 250, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &989736560
@@ -3883,20 +3883,19 @@ MonoBehaviour:
   - {fileID: 1708811412}
   inAirText: "1) Ambient air \x14\x14\x14\x14\u2060\u2014 currently laden with record
     shattering levels of the climate altering gas carbon dioxide\x14 \u2060\u2014
-    flows into the DACC machine."
-  sorbentText: "2) Inside the DACC are several panels of \"sorbent,\" a material
-    that bonds with CO\u2082. The CO\u2082 is captured in these panels and removed
-    from the air. Over time, the panels become saturated with CO\u2082."
-  outAirText: "5) Air flows out of the DACC with less CO\u2082 than when it entered,
-    reducing the amount of greenhouse gas in the air."
-  waterText: "3) Once the sorbent panels have been saturated, the box is sealed and
+    flows into the DACC machine. \u2082\u2082\u2082\u2082\u2082\u2082"
+  sorbentText: 2) Inside the DACC are several panels of "sorbent," a material that
+    bonds with CO2. The CO2 is captured in these panels and removed from the air.
+    Over time, the panels become saturated with CO2.
+  outAirText: 5) Air flows out of the DACC with less CO2 than when it entered, reducing
+    the amount of greenhouse gas in the air.
+  waterText: 3) Once the sorbent panels have been saturated, the box is sealed and
     water is sprayed on the panels. The water interacts with the sorbent, releasing
-    CO\u2082. Then the panels are ready to absorb more CO\u2082."
-  vaccumText: "4) After the CO\u2082 is released from the panels, a vacuum sucks
-    the CO\u2082 inside the sealed box and stores it in a canister. Once all the
-    CO\u2082 has been stored, the DAC reopens and the process repeats. The stored
-    CO\u2082 can be used in urban farms, where it is absorbed by plants and increases
-    crop yield."
+    CO2. Then the panels are ready to absorb more CO2.
+  vaccumText: 4) After the CO2 is released from the panels, a vacuum sucks the CO2
+    inside the sealed box and stores it in a canister. Once all the CO2 has been
+    stored, the DAC reopens and the process repeats. The stored CO2 can be used in
+    urban farms, where it is absorbed by plants and increases crop yield.
   currentState: 0
 --- !u!4 &1087165360
 Transform:
@@ -4851,7 +4850,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289475603}
   m_LocalRotation: {x: -0, y: -0, z: 0.000000014901159, w: 1}
-  m_LocalPosition: {x: 0.49, y: 0.09, z: -0.08}
+  m_LocalPosition: {x: 0.73, y: 0.074, z: -0.08}
   m_LocalScale: {x: 0.35, y: 0.29, z: 0.35}
   m_Children: []
   m_Father: {fileID: 1293906585}
@@ -5318,7 +5317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342887691}
   m_LocalRotation: {x: -0, y: -0, z: 0.000000014901159, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -1.298, y: -0.066, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.100000024}
   m_Children: []
   m_Father: {fileID: 1293906585}
@@ -6672,7 +6671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666137931}
   m_LocalRotation: {x: -0, y: -0, z: 0.000000014901159, w: 1}
-  m_LocalPosition: {x: 1.07, y: 0, z: 0}
+  m_LocalPosition: {x: 1.19, y: -0.089, z: 0}
   m_LocalScale: {x: 0.75, y: 0.36, z: 0.100000024}
   m_Children: []
   m_Father: {fileID: 1293906585}
