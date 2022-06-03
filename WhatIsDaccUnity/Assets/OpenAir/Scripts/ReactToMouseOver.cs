@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class ReactToMouseOver : MonoBehaviour
-{
+public class ReactToMouseOver : MonoBehaviour {
 	private Camera cam;
 
 	private int maxDepth = 20;
@@ -14,20 +13,21 @@ public class ReactToMouseOver : MonoBehaviour
 	public MeshRenderer boxRender;
 	public Material opaqueBox;
 	public Material transparentBox;
-	
+
 	public GameObject UIBox1;
 	public GameObject UIBox2;
-	
+
 	public Text UIBox1Text;
 	public Text UIBox2Text;
-	
+
 	public WaterPan water;
 	public SprayWater spray;
 	public VacuumManager vacuum;
 
 	public GameObject[] buttons;
-	
-	[FormerlySerializedAs("InAirText")] [TextArea]
+
+	[FormerlySerializedAs("InAirText")]
+	[TextArea]
 	public string inAirText;
 	[TextArea]
 	public string sorbentText;
@@ -38,127 +38,130 @@ public class ReactToMouseOver : MonoBehaviour
 	[TextArea]
 	public string vaccumText;
 
-	
-	public enum STATE
-	{
+	public bool overBox;
+	public bool overAirIn;
+	public bool overAirOut;
+	public bool overSorbent;
+	public bool overVaccum;
+	public bool overWater;
+
+
+	public enum STATE {
 		None, AirIn, Sorbent, Water, CO2, AirOut
 	}
 
 	public STATE currentState = STATE.None;
 
-	public STATE CurrentState
-	{
+	public STATE CurrentState {
 		get { return currentState; }
-		set
-		{
+		set {
 			//buttons[currentState.GetHashCode()].transform.localScale = Vector3.one;
 			currentState = value;
 		}
 	}
 
 	// Use this for initialization
-	void Start()
-	{
+	void Start() {
 		cam = Camera.main;
-		
-		Setup();
-    }
 
-	protected virtual void Setup()
-	{
+		Setup();
+
+		overBox = false;
+		overAirIn = false;
+		overAirOut = false;
+		overSorbent = false;
+		overVaccum = false;
+		overWater = false;
+	}
+
+	protected virtual void Setup() {
 		CurrentState = STATE.None;
 
-		for (int i = 1; i < buttons.Length; i++)
-		{
+		for (int i = 1; i < buttons.Length; i++) {
 			buttons[i].SetActive(false);
 		}
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
-        //print(inAirText);
-        //print(sorbentText);
-        //print(outAirText);
-        //print(waterText);
-        //print(vaccumText);
+	void Update() {
+		//print(inAirText);
+		//print(sorbentText);
+		//print(outAirText);
+		//print(waterText);
+		//print(vaccumText);
 
 		//Reset on R
-		if (Input.GetKeyDown(KeyCode.R))
-		{
+		if (Input.GetKeyDown(KeyCode.R)) {
 			SceneManager.LoadScene(0);
 		}
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		
+
 		RaycastHit[] hits;
 		hits = Physics.RaycastAll(ray);
 
-		bool overBox = false;
-		bool overAirIn = false;
-		bool overAirOut = false;
-		bool overSorbent = false;
-		bool overVaccum = false;
-		bool overWater = false;
-	
-		//check to see what the mouse is over
-		for (int i = 0; i < hits.Length; i++)
-		{
-			RaycastHit hit = hits[i];
-			
-			switch (hit.collider.name)
-			{
-				case "AirInTrigger":
-					overAirIn = CurrentState >= STATE.None;
-					break;
-				case "Box":
-					overBox = CurrentState >= STATE.AirIn;
-					break;
-				case "SorbentTrigger":
-					overSorbent = CurrentState >= STATE.AirIn;
-					break;
-				case "WaterTrigger":
-					overWater = CurrentState >= STATE.Sorbent;
-					break;
-				case "VaccumTrigger":
-					overVaccum = CurrentState >= STATE.Water;
-					break;
-				case "AirOutTrigger":
-					overAirOut = CurrentState >= STATE.CO2;
-					break;
+/*        overBox = false;
+        overAirIn = false;
+        overAirOut = false;
+        overSorbent = false;
+        overVaccum = false;
+        overWater = false;*/
+
+        //check to see what the mouse is over
+        for (int i = 0; i < hits.Length; i++) {
+            RaycastHit hit = hits[i];
+
+            if (hit.collider.name == "Box") {
+				overBox = CurrentState >= STATE.AirIn;
 			}
-		}
+
+			//old code that used raycasting instead of OnPointerEnter: 
+            /*switch (hit.collider.name) {
+                case "AirInTrigger":
+                    overAirIn = CurrentState >= STATE.None;
+                    break;
+                case "Box":
+                    overBox = CurrentState >= STATE.AirIn;
+                    break;
+                case "SorbentTrigger":
+                    overSorbent = CurrentState >= STATE.AirIn;
+                    break;
+                case "WaterTrigger":
+                    overWater = CurrentState >= STATE.Sorbent;
+                    break;
+                case "VaccumTrigger":
+                    overVaccum = CurrentState >= STATE.Water;
+                    break;
+                case "AirOutTrigger":
+                    overAirOut = CurrentState >= STATE.CO2;
+                    break;
+            }*/
+        }
 
 		//check the state, advance to the next state when the next state is mousedOver
-		switch (CurrentState)
-		{
+		switch (CurrentState) {
 			case STATE.None:
-				if (overAirIn)
-				{
+				if (overAirIn) {
 					CurrentState = STATE.AirIn;
 				}
 				break;
 			case STATE.AirIn:
-				if (overSorbent)
-				{
+				if (overSorbent) {
 					CurrentState = STATE.Sorbent;
 				}
 				break;
 			case STATE.Sorbent:
-				if (overWater)
-				{
+				if (overWater) {
 					CurrentState = STATE.Water;
 				}
 				break;
 			case STATE.Water:
-				if (overVaccum)
-				{
+				if (overVaccum) {
 					CurrentState = STATE.CO2;
 				}
 				break;
 			case STATE.CO2:
-				if (overAirOut)
-				{
+				if (overAirOut) {
 					CurrentState = STATE.AirOut;
 				}
 				break;
@@ -171,25 +174,21 @@ public class ReactToMouseOver : MonoBehaviour
 		water.waterUp = false;
 
 		//pulse the next UI element to attract interaction (unless they are all unlocked
-		if (CurrentState < STATE.AirOut)
-		{
+		if (CurrentState < STATE.AirOut) {
 			Dance(buttons[CurrentState.GetHashCode()]);
 		}
 
 		boxRender.material = overBox ? transparentBox : opaqueBox;
 
-		if (overAirIn)
-		{
+		if (overAirIn) {
 			UIBox1Text.text = inAirText;
 		}
 
-		if (overVaccum)
-		{
+		if (overVaccum) {
 			UIBox1Text.text = vaccumText;
 			vacuum.ActivateVacuum();
-		} 
-		if (overWater)
-		{
+		}
+		if (overWater) {
 			UIBox2Text.text = waterText;
 			water.waterUp = true;
 			spray.StartSpray();
@@ -197,24 +196,21 @@ public class ReactToMouseOver : MonoBehaviour
 			spray.StopSpray();
 		}
 
-		if (overSorbent)
-		{
+		if (overSorbent) {
 			UIBox1Text.text = sorbentText;
-		} 
-		
-		if (overAirOut)
-		{
+		}
+
+		if (overAirOut) {
 			UIBox2Text.text = outAirText;
 		}
 
 	}
 
-	public void Dance(GameObject button)
-	{
+	public void Dance(GameObject button) {
 		Vector3 newScale = Vector3.one;
-		newScale.x = Mathf.Sin(Time.unscaledTime * 7.5f)/5f + 1.5f;
+		newScale.x = Mathf.Sin(Time.unscaledTime * 7.5f) / 5f + 1.5f;
 		newScale.y = newScale.x;
-		
+
 		button.transform.localScale = newScale;
 		button.SetActive(true);
 	}
