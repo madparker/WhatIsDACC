@@ -100,13 +100,14 @@ public class ReactToMouseOver : MonoBehaviour {
 		RaycastHit[] hits;
 		hits = Physics.RaycastAll(ray);
 
+		overBox = false;
 /*        overBox = false;
         overAirIn = false;
         overAirOut = false;
         overSorbent = false;
         overVaccum = false;
         overWater = false;*/
-
+		
         //check to see what the mouse is over
         for (int i = 0; i < hits.Length; i++) {
             RaycastHit hit = hits[i];
