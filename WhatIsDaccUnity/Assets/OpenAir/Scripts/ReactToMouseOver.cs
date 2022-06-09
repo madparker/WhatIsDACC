@@ -7,25 +7,28 @@ using UnityEngine.UI;
 
 public class ReactToMouseOver : MonoBehaviour {
 	private Camera cam;
-
 	private int maxDepth = 20;
 
+	[Header("Box")]
 	public MeshRenderer boxRender;
 	public Material opaqueBox;
 	public Material transparentBox;
 
+	[Header("UI Elements")]
 	public GameObject UIBox1;
 	public GameObject UIBox2;
-
 	public Text UIBox1Text;
 	public Text UIBox2Text;
 
+	[Header("Animation References")]
 	public WaterPan water;
 	public SprayWater spray;
 	public VacuumManager vacuum;
 
+	[Space(10)]
 	public GameObject[] buttons;
 
+	[Header("Text")]
 	[FormerlySerializedAs("InAirText")]
 	[TextArea]
 	public string inAirText;
@@ -37,20 +40,20 @@ public class ReactToMouseOver : MonoBehaviour {
 	public string waterText;
 	[TextArea]
 	public string vaccumText;
-
-	public bool overBox;
-	public bool overAirIn;
-	public bool overAirOut;
-	public bool overSorbent;
-	public bool overVaccum;
-	public bool overWater;
+    
+	[HideInInspector] public bool overBox;
+	[HideInInspector] public bool overAirIn;
+	[HideInInspector] public bool overAirOut;
+	[HideInInspector] public bool overSorbent;
+	[HideInInspector] public bool overVaccum;
+	[HideInInspector] public bool overWater;
 
 
 	public enum STATE {
 		None, AirIn, Sorbent, Water, CO2, AirOut
 	}
 
-	public STATE currentState = STATE.None;
+	[HideInInspector] public STATE currentState = STATE.None;
 
 	public STATE CurrentState {
 		get { return currentState; }
@@ -177,6 +180,11 @@ public class ReactToMouseOver : MonoBehaviour {
 		//pulse the next UI element to attract interaction (unless they are all unlocked
 		if (CurrentState < STATE.AirOut) {
 			Dance(buttons[CurrentState.GetHashCode()]);
+            if (CurrentState.GetHashCode() != 0) {
+				buttons[CurrentState.GetHashCode() - 1].transform.localScale = Vector3.one * 1.4f;
+			}
+		} else if (CurrentState == STATE.AirOut) {
+			buttons[CurrentState.GetHashCode() - 1].transform.localScale = Vector3.one * 1.4f;
 		}
 
 		boxRender.material = overBox ? transparentBox : opaqueBox;
