@@ -14,22 +14,32 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
 			case "ButtonAirIn":
 				//main.overAirIn = true;
 				main.overAirIn = main.CurrentState >= ReactToMouseOver.STATE.None;
+				main.voiceOver.Stop();
+                main.voiceOver.PlayOneShot(main.sounds[0]);
 				break;
 			case "ButtonSorbent":
 				//main.overSorbent = true;
 				main.overSorbent = main.CurrentState >= ReactToMouseOver.STATE.AirIn;
+				main.voiceOver.Stop();
+				main.voiceOver.PlayOneShot(main.sounds[1]);
 				break;
 			case "ButtonWater":
 				//main.overWater = true;
 				main.overWater = main.CurrentState >= ReactToMouseOver.STATE.Sorbent;
+				main.voiceOver.Stop();
+				main.voiceOver.PlayOneShot(main.sounds[2]);
 				break;
 			case "ButtonVaccum":
 				//main.overVaccum = true;
 				main.overVaccum = main.CurrentState >= ReactToMouseOver.STATE.Water;
+				main.voiceOver.Stop();
+				main.voiceOver.PlayOneShot(main.sounds[3]);
 				break;
 			case "ButtonAirOut":
 				//main.overAirOut = true;
 				main.overAirOut = main.CurrentState >= ReactToMouseOver.STATE.CO2;
+				main.voiceOver.Stop();
+				main.voiceOver.PlayOneShot(main.sounds[4]);
 				break;
 		}
 	}

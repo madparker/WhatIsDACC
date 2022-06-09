@@ -14,6 +14,10 @@ public class ReactToMouseOver : MonoBehaviour {
 	public Material opaqueBox;
 	public Material transparentBox;
 
+	[Header("Sound")]
+	public AudioSource voiceOver;
+	public AudioClip[] sounds;
+
 	[Header("UI Elements")]
 	public GameObject UIBox1;
 	public GameObject UIBox2;
