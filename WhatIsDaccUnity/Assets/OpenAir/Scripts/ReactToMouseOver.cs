@@ -9,6 +9,13 @@ public class ReactToMouseOver : MonoBehaviour {
 	private Camera cam;
 	private int maxDepth = 20;
 
+	[Header("Highlight Objects")]
+	public GameObject[] button1Objects;
+	public GameObject[] button2Objects;
+	public GameObject[] button3Objects;
+	public GameObject[] button4Objects;
+	public GameObject[] button5Objects;
+
 	[Header("Box")]
 	public MeshRenderer boxRender;
 	public Material opaqueBox;
@@ -28,6 +35,7 @@ public class ReactToMouseOver : MonoBehaviour {
 	public WaterPan water;
 	public SprayWater spray;
 	public VacuumManager vacuum;
+	public MoveFoward moveFoward;
 
 	[Space(10)]
 	public GameObject[] buttons;
@@ -194,10 +202,12 @@ public class ReactToMouseOver : MonoBehaviour {
 		boxRender.material = overBox ? transparentBox : opaqueBox;
 
 		if (overAirIn) {
+			moveFoward.pause = false;
 			UIBox1Text.text = inAirText;
 		}
 
 		if (overVaccum) {
+			moveFoward.pause = false;
 			UIBox1Text.text = vaccumText;
 			vacuum.ActivateVacuum();
 		}
@@ -210,10 +220,12 @@ public class ReactToMouseOver : MonoBehaviour {
 		}
 
 		if (overSorbent) {
+			moveFoward.pause = false;
 			UIBox1Text.text = sorbentText;
 		}
 
 		if (overAirOut) {
+			moveFoward.pause = false;
 			UIBox2Text.text = outAirText;
 		}
 
