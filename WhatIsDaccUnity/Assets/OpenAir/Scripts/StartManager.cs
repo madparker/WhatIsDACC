@@ -4,23 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StartManager : MonoBehaviour
-{
-/*    public GameObject ButtonAirIn;
-    public GameObject RestartButton;
-    public GameObject UIBox1;
-    public GameObject UIBox2;
-    public GameObject ButtonSorbent;
-    public GameObject ButtonVacuum;
-    public GameObject ButtonWater;
-    public GameObject ButtonAirOut;*/
-    
+{    
     //camera and lerping
     public Camera Cam;
     public float CamStartSize;
     public float CamEndSize;
     public float LerpDuration;
+    
     private float _timeElapsed;
-
     private bool _start;
 
     //things that appear
@@ -35,8 +26,6 @@ public class StartManager : MonoBehaviour
 
     void Start()
     {
-        //ButtonAirIn.GetComponent<CanvasRenderer>().SetAlpha(0f);
-        //RestartButton.GetComponent<CanvasRenderer>().SetAlpha(0f);
         DAC.GetComponent<ReactToMouseOver>().enabled = false;
 
         foreach (GameObject i in UIElements) {
@@ -51,9 +40,6 @@ public class StartManager : MonoBehaviour
 
     void Update()
     {
-        //DAC.GetComponent<ReactToMouseOver>().enabled = true;
-
-        
         if (_start && _timeElapsed < LerpDuration) {
             //zoom in on graphic
             Cam.orthographicSize = Mathf.Lerp(CamStartSize, CamEndSize, _timeElapsed / LerpDuration);
@@ -62,7 +48,6 @@ public class StartManager : MonoBehaviour
             StartButton.GetComponent<Image>().color = new Color(255,255,255, Mathf.Lerp(1, 0, _timeElapsed / LerpDuration));
             StartButtonText.color = new Color(50, 50, 50, Mathf.Lerp(1, 0, _timeElapsed / LerpDuration));
             IntroParagraph.color = new Color(255, 255, 255, Mathf.Lerp(1, 0, _timeElapsed / LerpDuration));
-
 
             _timeElapsed += Time.deltaTime;
         }
@@ -82,8 +67,5 @@ public class StartManager : MonoBehaviour
 
     public void OnPressStart() {
         _start = true;
-
-        StartButton.GetComponent<Image>().CrossFadeAlpha(0f, LerpDuration, false);
-
     }
 }
