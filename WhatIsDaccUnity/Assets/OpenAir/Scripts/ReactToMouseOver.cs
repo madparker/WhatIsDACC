@@ -239,4 +239,8 @@ public class ReactToMouseOver : MonoBehaviour {
 		button.transform.localScale = newScale;
 		button.SetActive(true);
 	}
+
+	public void Restart() {
+		SceneManager.LoadScene(0);
+    }
 }
