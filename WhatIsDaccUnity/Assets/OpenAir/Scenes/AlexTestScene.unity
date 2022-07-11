@@ -5471,6 +5471,8 @@ MonoBehaviour:
   spray: {fileID: 452258150}
   vacuum: {fileID: 0}
   moveFoward: {fileID: 0}
+  activeButtonColor: {r: 0, g: 0, b: 0, a: 0}
+  deactivatedButtonColor: {r: 0, g: 0, b: 0, a: 0}
   buttons: []
   inAirText: "1)  Ambient air, which are currently at the the highest levels of CO\u2082
     in recorded history, contributing to climate change, flows into a DAC machine."
@@ -5708,6 +5710,8 @@ MonoBehaviour:
   spray: {fileID: 452258150}
   vacuum: {fileID: 1148462047}
   moveFoward: {fileID: 321278459}
+  activeButtonColor: {r: 0.101960786, g: 0.8784314, b: 0, a: 1}
+  deactivatedButtonColor: {r: 0.6509804, g: 0.50980395, b: 1, a: 1}
   buttons:
   - {fileID: 163843184}
   - {fileID: 675431297}

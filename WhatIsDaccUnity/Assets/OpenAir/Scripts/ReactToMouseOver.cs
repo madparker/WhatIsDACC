@@ -37,7 +37,9 @@ public class ReactToMouseOver : MonoBehaviour {
 	public VacuumManager vacuum;
 	public MoveFoward moveFoward;
 
-	[Space(10)]
+	[Header("Buttons")]
+	public Color activeButtonColor;
+	public Color deactivatedButtonColor;
 	public GameObject[] buttons;
 
 	[Header("Text")]
@@ -191,12 +193,18 @@ public class ReactToMouseOver : MonoBehaviour {
 
 		//pulse the next UI element to attract interaction (unless they are all unlocked
 		if (CurrentState < STATE.AirOut) {
+			//pulse button and change color to active color
 			Dance(buttons[CurrentState.GetHashCode()]);
-            if (CurrentState.GetHashCode() != 0) {
+			buttons[CurrentState.GetHashCode()].GetComponent<Image>().color = activeButtonColor;
+
+			if (CurrentState.GetHashCode() != 0) {
+				//change last button's color and size
 				buttons[CurrentState.GetHashCode() - 1].transform.localScale = Vector3.one * 1.4f;
+				buttons[CurrentState.GetHashCode() - 1].GetComponent<Image>().color = deactivatedButtonColor;
 			}
-		} else if (CurrentState == STATE.AirOut) {
+		} else if (CurrentState == STATE.AirOut) { //if all are unlocked
 			buttons[CurrentState.GetHashCode() - 1].transform.localScale = Vector3.one * 1.4f;
+			buttons[CurrentState.GetHashCode() - 1].GetComponent<Image>().color = deactivatedButtonColor;
 		}
 
 		boxRender.material = overBox ? transparentBox : opaqueBox;

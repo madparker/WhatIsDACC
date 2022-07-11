@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonMouseOver : MonoBehaviour, IPointerClickHandler
 {
     public ReactToMouseOver main;
 
 	//when mousing over the button set the corresponding value to true in the main script
-    public void OnPointerEnter(PointerEventData eventData) {
-
+    public void OnPointerClick(PointerEventData eventData) {
+		DeactivateOutlines();
 		switch (this.name) {
 			case "ButtonAirIn":
 				//main.overAirIn = true;
@@ -103,33 +103,50 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
 	private void DeactivateOutlines() {
-		switch (this.name) {
-			case "ButtonAirIn":
-				foreach (GameObject i in main.button1Objects) {
-					i.GetComponent<Outline>().enabled = false;
-				}
-				break;
-			case "ButtonSorbent":
-				foreach (GameObject i in main.button2Objects) {
-					i.GetComponent<Outline>().enabled = false;
-				}
-				break;
-			case "ButtonWater":
-				foreach (GameObject i in main.button3Objects) {
-					i.GetComponent<Outline>().enabled = false;
-				}
-				break;
-			case "ButtonVaccum":
-				foreach (GameObject i in main.button4Objects) {
-					i.GetComponent<Outline>().enabled = false;
-				}
-				break;
-			case "ButtonAirOut":
-				foreach (GameObject i in main.button5Objects) {
-					i.GetComponent<Outline>().enabled = false;
-				}
-				break;
+		//deactivate all button objects outlines
+		foreach (GameObject i in main.button1Objects) {
+			i.GetComponent<Outline>().enabled = false;
 		}
+		foreach (GameObject i in main.button2Objects) {
+			i.GetComponent<Outline>().enabled = false;
+		}
+		foreach (GameObject i in main.button3Objects) {
+			i.GetComponent<Outline>().enabled = false;
+		}
+		foreach (GameObject i in main.button4Objects) {
+			i.GetComponent<Outline>().enabled = false;
+		}
+		foreach (GameObject i in main.button5Objects) {
+			i.GetComponent<Outline>().enabled = false;
+		}
+
+		/*		switch (this.name) {
+					case "ButtonAirIn":
+						foreach (GameObject i in main.button1Objects) {
+							i.GetComponent<Outline>().enabled = false;
+						}
+						break;
+					case "ButtonSorbent":
+						foreach (GameObject i in main.button2Objects) {
+							i.GetComponent<Outline>().enabled = false;
+						}
+						break;
+					case "ButtonWater":
+						foreach (GameObject i in main.button3Objects) {
+							i.GetComponent<Outline>().enabled = false;
+						}
+						break;
+					case "ButtonVaccum":
+						foreach (GameObject i in main.button4Objects) {
+							i.GetComponent<Outline>().enabled = false;
+						}
+						break;
+					case "ButtonAirOut":
+						foreach (GameObject i in main.button5Objects) {
+							i.GetComponent<Outline>().enabled = false;
+						}
+						break;
+				}*/
 	}
 
 	private void SetAllFalse() {
