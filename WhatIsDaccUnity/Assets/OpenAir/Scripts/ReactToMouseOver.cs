@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ReactToMouseOver : MonoBehaviour {
-	private Camera cam;
-	private int maxDepth = 20;
+/*	private Camera cam;
+	private int maxDepth = 20;*/
 
 	[Header("Highlight Objects")]
 	public GameObject[] button1Objects;
@@ -79,7 +79,7 @@ public class ReactToMouseOver : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		cam = Camera.main;
+		//cam = Camera.main;
 
 		Setup();
 
@@ -204,7 +204,12 @@ public class ReactToMouseOver : MonoBehaviour {
 			}
 		} else if (CurrentState == STATE.AirOut) { //if all are unlocked
 			buttons[CurrentState.GetHashCode() - 1].transform.localScale = Vector3.one * 1.4f;
-			buttons[CurrentState.GetHashCode() - 1].GetComponent<Image>().color = deactivatedButtonColor;
+			//buttons[CurrentState.GetHashCode() - 1].GetComponent<Image>().color = deactivatedButtonColor;
+
+			//set all button colors to default every time one is clicked (since they can be clicked in any order now)
+			for(int i = 0; i < buttons.Length; i++) {
+				buttons[i].GetComponent<Image>().color = deactivatedButtonColor;
+            }
 		}
 
 		boxRender.material = overBox ? transparentBox : opaqueBox;
@@ -212,29 +217,50 @@ public class ReactToMouseOver : MonoBehaviour {
 		if (overAirIn) {
 			moveFoward.pause = false;
 			UIBox1Text.text = inAirText;
+
+			//set active button color (after final step has been shown)
+			if (CurrentState == STATE.AirOut)
+				buttons[0].GetComponent<Image>().color = activeButtonColor;
+		}
+
+		if (overSorbent) {
+			moveFoward.pause = false;
+			UIBox1Text.text = sorbentText;
+
+			//set active button color (after final step has been shown)
+			if (CurrentState == STATE.AirOut)
+				buttons[1].GetComponent<Image>().color = activeButtonColor;
+		}
+
+		if (overWater) {
+			UIBox2Text.text = waterText;
+			water.waterUp = true;
+			spray.StartSpray();
+
+			//set active button color (after final step has been shown)
+			if (CurrentState == STATE.AirOut)
+				buttons[2].GetComponent<Image>().color = activeButtonColor;
+		} else {
+			spray.StopSpray();
 		}
 
 		if (overVaccum) {
 			moveFoward.pause = false;
 			UIBox1Text.text = vaccumText;
 			vacuum.ActivateVacuum();
-		}
-		if (overWater) {
-			UIBox2Text.text = waterText;
-			water.waterUp = true;
-			spray.StartSpray();
-		} else {
-			spray.StopSpray();
-		}
 
-		if (overSorbent) {
-			moveFoward.pause = false;
-			UIBox1Text.text = sorbentText;
+			//set active button color (after final step has been shown)
+			if (CurrentState == STATE.AirOut)
+				buttons[3].GetComponent<Image>().color = activeButtonColor;
 		}
 
 		if (overAirOut) {
 			moveFoward.pause = false;
 			UIBox2Text.text = outAirText;
+
+			//set active button color (after final step has been shown)
+			if (CurrentState == STATE.AirOut)
+				buttons[4].GetComponent<Image>().color = activeButtonColor;
 		}
 
 	}

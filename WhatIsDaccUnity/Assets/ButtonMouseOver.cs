@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonMouseOver : MonoBehaviour, IPointerClickHandler
 {
     public ReactToMouseOver main;
 
-	//when mousing over the button set the corresponding value to true in the main script
+	//when clicking button set the corresponding value to true in the main script
     public void OnPointerClick(PointerEventData eventData) {
+		//disable all outlines and set button colors
 		DeactivateOutlines();
+		//SetButtonColors();
+
 		switch (this.name) {
 			case "ButtonAirIn":
 				//main.overAirIn = true;
@@ -52,27 +56,11 @@ public class ButtonMouseOver : MonoBehaviour, IPointerClickHandler
 
 	//set the value to false when leaving the button
     public void OnPointerExit(PointerEventData eventData) {
-/*		switch (this.name) {
-			case "ButtonAirIn":
-				main.overAirIn = false;
-				break;
-			case "ButtonSorbent":
-				main.overSorbent = false;
-				break;
-			case "ButtonWater":
-				main.overWater = false;
-				break;
-			case "ButtonVaccum":
-				main.overVaccum = false;
-				break;
-			case "ButtonAirOut":
-				main.overAirOut = false;
-				break;
-		}*/
 		DeactivateOutlines();
 	}
 
 	private void ActivateOutlines() {
+		//activate current button outline
 		switch (this.name) {
 			case "ButtonAirIn":
 				foreach(GameObject i in main.button1Objects) {
@@ -103,7 +91,7 @@ public class ButtonMouseOver : MonoBehaviour, IPointerClickHandler
     }
 
 	private void DeactivateOutlines() {
-		//deactivate all button objects outlines
+		//deactivate all button objects' outlines
 		foreach (GameObject i in main.button1Objects) {
 			i.GetComponent<Outline>().enabled = false;
 		}
@@ -147,6 +135,16 @@ public class ButtonMouseOver : MonoBehaviour, IPointerClickHandler
 						}
 						break;
 				}*/
+	}
+
+	private void SetButtonColors() {
+		//set this button's color to active color
+		GetComponent<Image>().color = main.activeButtonColor;
+
+		//set all other button colors to deactivated color
+		foreach(GameObject i in main.buttons) {
+			i.GetComponent<Image>().color = main.deactivatedButtonColor;
+		}
 	}
 
 	private void SetAllFalse() {
