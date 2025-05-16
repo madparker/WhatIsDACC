@@ -57,6 +57,6 @@ public class SprayWater : MonoBehaviour
                                        Random.Range(0.25f, .75f), 
                                        Random.Range(-1.5f, .5f));
 
-        water.GetComponent<Rigidbody>().velocity = velocity;
+        water.GetComponent<Rigidbody>().linearVelocity = velocity;
     }
 }
