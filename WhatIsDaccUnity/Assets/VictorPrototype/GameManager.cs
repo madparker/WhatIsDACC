@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     [Header("External Components")]
     [SerializeField] CameraMover cameraMover; //On Camera Manager
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
+    [SerializeField] SorbentManager sorbentManager; //On Level 2
 
     [SerializeField] MeshRenderer boxTop;
     [SerializeField] MeshRenderer boxFront;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject levelTitleContainer;
     [SerializeField] GameObject levelDescriptionContainer;
     [SerializeField] GameObject interactiveDescriptionContainer;
+    [SerializeField] GameObject waitButton;
 
     [Header("Text")]
     [SerializeField] TextMeshProUGUI levelTitle;
@@ -33,16 +35,21 @@ public class GameManager : MonoBehaviour
     [Header("Level Descriptions")]
     [SerializeField] string airInTitle;
     [SerializeField] [TextArea] string airInDescription;
+    [SerializeField] string airInWaitText;
 
-    [SerializeField] string filterTitle;
-    [SerializeField][TextArea] string filterDescription;
+    [SerializeField] string absorbSetUpTitle;
+    [SerializeField][TextArea] string absorbSetUpDescription;
+    [SerializeField] string absorbSetUpWaitText;
+
+    [SerializeField] string absorbTitle;
+    [SerializeField][TextArea] string absorbDescription;
 
     public enum STATE
     {
-        Intro, AirIn, Filter, Water, Vacuum, AirOut
+        Intro, AirIn, AbsorbSetUp, Absorb, Water, Vacuum, AirOut
     }
 
-    [HideInInspector] public STATE currentState = STATE.Intro;
+    public STATE currentState = STATE.Intro;
 
     //Private Variables
     bool nextState = false;
@@ -52,7 +59,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         mouseTracker = GetComponent<MouseTracker>();
-
+        
+        waitButton.SetActive(false);
         SetLevelText(false);
         DeactivateInteractive();
     }
@@ -67,6 +75,8 @@ public class GameManager : MonoBehaviour
                 if(nextState)
                 {
                     cameraMover.UpdateCameraPosition();
+
+                    waitButton.SetActive(true);
 
                     currentState = STATE.AirIn;
                     mouseTracker.enabled = true;
@@ -84,6 +94,7 @@ public class GameManager : MonoBehaviour
                     moleculeManager.ActivateMolecules();
 
                     setUpState = true;
+                    waitButton.SetActive(false);
                 }
 
 
@@ -94,26 +105,35 @@ public class GameManager : MonoBehaviour
                     cameraMover.UpdateCameraPosition();
                     moleculeManager.DeactivateMolecules();
 
+                    waitButton.SetActive(true);
+
                     SetLevelText(false);
                     DeactivateInteractive();
 
-                    currentState = STATE.Filter;
+                    currentState = STATE.AbsorbSetUp;
                     mouseTracker.enabled = false;
 
                     nextState = false;
                     setUpState = false;
                 }
                 break;
-            case STATE.Filter:
+            case STATE.AbsorbSetUp:
 
                 if (!cameraMover.isMoving && !setUpState)
                 {
                     SetLevelText(true);
-                    SetLevelTextContent(filterTitle, filterDescription);
+                    SetLevelTextContent(absorbSetUpTitle, absorbSetUpDescription);
                     setUpState = true;
 
-                    boxFront.enabled = false;
-                    boxTop.enabled = false;
+                    sorbentManager.SetUp();
+                    
+                    //boxFront.enabled = false;
+                    //boxTop.enabled = false;
+                }
+
+                if(sorbentManager.isFull && waitButton.activeInHierarchy)
+                {
+                    waitButton.SetActive(false);
                 }
 
 
@@ -172,5 +192,10 @@ public class GameManager : MonoBehaviour
     public void NextState()
     {
         nextState = true;
+    }
+
+    public void Wait()
+    {
+        
     }
 }
