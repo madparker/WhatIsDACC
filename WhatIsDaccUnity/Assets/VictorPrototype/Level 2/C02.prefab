@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6906471960972530897}
   - component: {fileID: 5956210000727269933}
   - component: {fileID: 1849693888068506772}
-  - component: {fileID: 85188267518381433}
+  - component: {fileID: 6789771711858139242}
   m_Layer: 3
   m_Name: C02
   m_TagString: CO2
@@ -125,7 +125,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4933335, y: 0.6570032, z: 118.3013}
   m_Center: {x: 0.007181376, y: -0.01307193, z: -4.735347}
---- !u!54 &85188267518381433
+--- !u!54 &6789771711858139242
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

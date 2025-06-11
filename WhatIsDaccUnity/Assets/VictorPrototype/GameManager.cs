@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     public enum STATE
     {
-        Intro, AirIn, AbsorbSetUp, Absorb, Water, Vacuum, AirOut
+        Intro, AirInSetUp, AirIn, AbsorbSetUp, Absorb, Water, Vacuum, AirOut
     }
 
     public STATE currentState = STATE.Intro;
@@ -78,14 +78,14 @@ public class GameManager : MonoBehaviour
 
                     waitButton.SetActive(true);
 
-                    currentState = STATE.AirIn;
+                    currentState = STATE.AirInSetUp;
                     mouseTracker.enabled = true;
 
                     nextState = false;
                     setUpState = false;
                 }
                 break;
-            case STATE.AirIn:
+            case STATE.AirInSetUp:
 
                 if(!cameraMover.isMoving && !setUpState)
                 {
@@ -102,8 +102,30 @@ public class GameManager : MonoBehaviour
                 if (nextState)
                 {
                     DeactivateInteractive();
+
+                    waitButton.SetActive(true);
+
+                    currentState = STATE.AirIn;
+
+                    nextState = false;
+                    setUpState = false;
+                }
+                break;
+            case STATE.AirIn:
+                if(!setUpState)
+                {
+                    moleculeManager.ToggleFan(true);
+                    setUpState = true;
+                }
+
+                waitButton.SetActive(!moleculeManager.CheckIfNull()); //Checks if the array of molecules is empty
+
+
+                if (nextState)
+                {
+                    DeactivateInteractive();
                     cameraMover.UpdateCameraPosition();
-                    moleculeManager.DeactivateMolecules();
+                    moleculeManager.ToggleFan(false);
 
                     waitButton.SetActive(true);
 

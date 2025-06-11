@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CO2
   - Molecule
+  - Fan
   layers:
   - Default
   - TransparentFX

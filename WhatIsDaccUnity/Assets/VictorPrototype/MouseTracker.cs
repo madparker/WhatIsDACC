@@ -35,7 +35,7 @@ public class MouseTracker : MonoBehaviour
             _selection = selection;
         } else
         {
-            if (_selection != null)
+            if (_selection != null && gameManager.currentState == GameManager.STATE.AirInSetUp)
             {
                 _selection.gameObject.GetComponent<MoleculeBehavior>().DeactivateSelf();
                 gameManager.DeactivateInteractive();
@@ -43,9 +43,9 @@ public class MouseTracker : MonoBehaviour
             }
         }
 
-        //this.transform.position = new Vector3(worldPosition.x, this.transform.position.y, worldPosition.z);
+        this.transform.position = new Vector3(worldPosition.x, worldPosition.y, this.transform.position.z);
 
-        if (_selection != null)
+        if (_selection != null && gameManager.currentState == GameManager.STATE.AirInSetUp)
         {
             _selection.gameObject.GetComponent<MoleculeBehavior>().ActivateSelf();
 
