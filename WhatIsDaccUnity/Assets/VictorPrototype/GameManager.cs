@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject levelDescriptionContainer;
     [SerializeField] GameObject interactiveDescriptionContainer;
     [SerializeField] GameObject waitButton;
+    [SerializeField] GameObject nextButton;
+    [SerializeField] GameObject releaseOptions;
 
     [Header("Text")]
     [SerializeField] TextMeshProUGUI levelTitle;
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI interactiveDescription;
 
     [Header("Level Descriptions")]
+    [SerializeField] string airInSetUpTitle;
+    [SerializeField][TextArea] string airInSetUpDescription;
     [SerializeField] string airInTitle;
     [SerializeField] [TextArea] string airInDescription;
     [SerializeField] string airInWaitText;
@@ -40,13 +44,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] string absorbSetUpTitle;
     [SerializeField][TextArea] string absorbSetUpDescription;
     [SerializeField] string absorbSetUpWaitText;
+    [SerializeField] string[] absorbTitles;
+    [SerializeField][TextArea] string[] absorbDescriptions;
 
-    [SerializeField] string absorbTitle;
-    [SerializeField][TextArea] string absorbDescription;
+    //private variables
+    int releaseChoice = 0;
 
     public enum STATE
     {
-        Intro, AirInSetUp, AirIn, AbsorbSetUp, Absorb, Water, Vacuum, AirOut
+        Intro, AirInSetUp, AirIn, Absorb, Release, Water, Vacuum, AirOut
     }
 
     public STATE currentState = STATE.Intro;
@@ -90,7 +96,7 @@ public class GameManager : MonoBehaviour
                 if(!cameraMover.isMoving && !setUpState)
                 {
                     SetLevelText(true);
-                    SetLevelTextContent(airInTitle, airInDescription);
+                    SetLevelTextContent(airInSetUpTitle, airInSetUpDescription);
                     moleculeManager.ActivateMolecules();
 
                     setUpState = true;
@@ -115,11 +121,15 @@ public class GameManager : MonoBehaviour
                 if(!setUpState)
                 {
                     moleculeManager.ToggleFan(true);
+                    SetLevelTextContent(airInTitle, airInDescription);
+
                     setUpState = true;
                 }
 
-                waitButton.SetActive(!moleculeManager.CheckIfNull()); //Checks if the array of molecules is empty
+                bool airIsEmpty = moleculeManager.CheckIfNull();
 
+                waitButton.SetActive(!airIsEmpty); //Checks if the array of molecules is empty
+                moleculeManager.ToggleFan(!airIsEmpty); //Turns off the fan
 
                 if (nextState)
                 {
@@ -132,14 +142,14 @@ public class GameManager : MonoBehaviour
                     SetLevelText(false);
                     DeactivateInteractive();
 
-                    currentState = STATE.AbsorbSetUp;
+                    currentState = STATE.Absorb;
                     mouseTracker.enabled = false;
 
                     nextState = false;
                     setUpState = false;
                 }
                 break;
-            case STATE.AbsorbSetUp:
+            case STATE.Absorb:
 
                 if (!cameraMover.isMoving && !setUpState)
                 {
@@ -149,21 +159,26 @@ public class GameManager : MonoBehaviour
 
                     sorbentManager.SetUp();
                     
-                    //boxFront.enabled = false;
+                    boxFront.enabled = false;
                     //boxTop.enabled = false;
                 }
 
-                if(sorbentManager.isFull && waitButton.activeInHierarchy)
+                if(sorbentManager.isFull && !releaseOptions.activeInHierarchy)
                 {
-                    waitButton.SetActive(false);
+                    releaseOptions.SetActive(true);
+                    SetDescription(false);
+                    ActivateInteractive(absorbTitles[releaseChoice], absorbDescriptions[releaseChoice]);
                 }
 
 
                 if (nextState)
                 {
-                    currentState = STATE.Water;
+                    currentState = STATE.Release;
                     nextState = false;
                 }
+                break;
+            case STATE.Release:
+
                 break;
             case STATE.Water:
 
@@ -198,6 +213,11 @@ public class GameManager : MonoBehaviour
         levelDescription.text = description;
     }
 
+    void SetDescription(bool textState)
+    {
+        levelDescriptionContainer.SetActive(textState);
+    }
+
     public void ActivateInteractive(string title, string description)
     {
         interactiveDescriptionContainer.SetActive(true);
@@ -219,5 +239,11 @@ public class GameManager : MonoBehaviour
     public void Wait()
     {
         
+    }
+
+    public void ReleaseChoice(int choice)
+    {
+        releaseChoice = choice;
+        ActivateInteractive(absorbTitles[releaseChoice], absorbDescriptions[releaseChoice]);
     }
 }
