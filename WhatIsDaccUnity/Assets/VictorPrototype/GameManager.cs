@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CameraMover cameraMover; //On Camera Manager
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
     [SerializeField] SorbentManager sorbentManager; //On Level 2
+    [SerializeField] HydroswingManager hydroswingManager; //On Level 3
 
     [SerializeField] MeshRenderer boxTop;
     [SerializeField] MeshRenderer boxFront;
@@ -173,11 +174,28 @@ public class GameManager : MonoBehaviour
 
                 if (nextState)
                 {
+                    cameraMover.UpdateCameraPosition();
                     currentState = STATE.Release;
+
                     nextState = false;
+
+                    SetLevelText(false);
+                    DeactivateInteractive();
                 }
                 break;
             case STATE.Release:
+                if (!cameraMover.isMoving && !setUpState)
+                {
+                    //SetLevelText(true);
+                    //SetLevelTextContent(absorbSetUpTitle, absorbSetUpDescription);
+                    setUpState = true;
+
+                    hydroswingManager.NextStep();
+
+                    //boxFront.enabled = false;
+                    //boxTop.enabled = false;
+                }
+
 
                 break;
             case STATE.Water:
