@@ -182,13 +182,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33186758}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27059805, y: -0.27059805, z: 0.6532815, w: 0.6532815}
+  m_LocalRotation: {x: 0.12886, y: -0.12886, z: 0.6952662, w: 0.6952662}
   m_LocalPosition: {x: -1.518, y: 1.489, z: -1.153235}
   m_LocalScale: {x: 0.5000002, y: 0.9000002, z: 0.020000007}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2132780888}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 21, y: 0, z: 90}
 --- !u!23 &33186762
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8404,6 +8404,7 @@ MonoBehaviour:
   isLastSorbet: 0
   isFull: 0
   isActive: 0
+  currentState: 0
 --- !u!1001 &1077857624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13739,8 +13740,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1252705489}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ReleaseChoice
-        m_Mode: 3
+        m_MethodName: NextState
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -18488,6 +18489,7 @@ MonoBehaviour:
   isLastSorbet: 1
   isFull: 0
   isActive: 0
+  currentState: 0
 --- !u!1001 &2046330610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20217,6 +20219,7 @@ MonoBehaviour:
   isLastSorbet: 0
   isFull: 0
   isActive: 0
+  currentState: 0
 --- !u!1 &2091845688
 GameObject:
   m_ObjectHideFlags: 0
@@ -21443,6 +21446,9 @@ MonoBehaviour:
   - {fileID: 1055827529}
   - {fileID: 2079171158}
   sorbentGameTransform: {fileID: 33186759}
+  carbonPrefab: {fileID: 8205050176197757992, guid: c4f74126ae4f28a48b6d05e3d4285c7e,
+    type: 3}
+  currentState: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

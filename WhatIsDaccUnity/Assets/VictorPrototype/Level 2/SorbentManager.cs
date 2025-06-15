@@ -27,13 +27,13 @@ public class SorbentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isFull) isFull = lastSorbent.GetComponent<SorbentBehavior>().isFull;
+        if(!isFull) isFull = lastSorbent.GetComponent<SorbentBehavior>().currentState == SorbentBehavior.STATE.Full;
     }
 
     public void SetUp()
     {
         Invoke("SpawnMolecule", spawnDelay);
-        firstSorbent.GetComponent<SorbentBehavior>().isActive = true;
+        firstSorbent.GetComponent<SorbentBehavior>().currentState = SorbentBehavior.STATE.Ready;
     }
 
     void SpawnMolecule()

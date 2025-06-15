@@ -11,7 +11,14 @@ public class SorbentBehavior : MonoBehaviour
 
     GameObject[] molecules = new GameObject[3];
     int currentMolecule = 0;
-    
+
+    public enum STATE
+    {
+        Idle, Ready, Full, Move, Fill, Release
+    }
+
+    public STATE currentState = STATE.Idle;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,12 +29,26 @@ public class SorbentBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isActive && previousSorbent != null && previousSorbent.GetComponent<SorbentBehavior>().isFull) isActive = true;
+        switch(currentState)
+        {
+            case STATE.Idle:
+                if (previousSorbent != null && previousSorbent.GetComponent<SorbentBehavior>().currentState == STATE.Full) currentState = STATE.Ready;
+                break;
+            case STATE.Ready:
+
+                break;
+            case STATE.Full:
+
+                break;
+            case STATE.Release:
+
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(isActive && other.gameObject.CompareTag("CO2") && !isFull) AddToSelf(other.gameObject);
+        if(currentState == STATE.Ready && other.gameObject.CompareTag("CO2")) AddToSelf(other.gameObject);
     }
 
     void AddToSelf(GameObject molecule)
@@ -38,6 +59,14 @@ public class SorbentBehavior : MonoBehaviour
         molecule.transform.rotation = moleculePlacements[currentMolecule].transform.rotation;
         currentMolecule++;
 
-        if(currentMolecule == moleculePlacements.Length) isFull = true;
+        if (currentMolecule == moleculePlacements.Length) currentState = STATE.Full;
+    }
+
+    public void ClearSelf()
+    {
+        for (int i = 0; i < molecules.Length; i++)
+        {
+            Destroy(molecules[i].gameObject);
+        }
     }
 }

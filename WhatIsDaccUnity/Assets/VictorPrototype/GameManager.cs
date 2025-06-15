@@ -138,7 +138,8 @@ public class GameManager : MonoBehaviour
                     cameraMover.UpdateCameraPosition();
                     moleculeManager.ToggleFan(false);
 
-                    waitButton.SetActive(true);
+                    //waitButton.SetActive(true);
+                    nextButton.SetActive(false);
 
                     SetLevelText(false);
                     DeactivateInteractive();
@@ -178,6 +179,9 @@ public class GameManager : MonoBehaviour
                     currentState = STATE.Release;
 
                     nextState = false;
+                    setUpState = false;
+
+                    releaseOptions.SetActive(false);
 
                     SetLevelText(false);
                     DeactivateInteractive();
@@ -188,9 +192,9 @@ public class GameManager : MonoBehaviour
                 {
                     //SetLevelText(true);
                     //SetLevelTextContent(absorbSetUpTitle, absorbSetUpDescription);
-                    setUpState = true;
-
+                    
                     hydroswingManager.NextStep();
+                    setUpState = true;
 
                     //boxFront.enabled = false;
                     //boxTop.enabled = false;
