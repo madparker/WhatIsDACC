@@ -16,7 +16,7 @@ public class PhysicalCarbonBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(transform.position.y < -5) Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
     [SerializeField] SorbentManager sorbentManager; //On Level 2
     [SerializeField] HydroswingManager hydroswingManager; //On Level 3
+    [SerializeField] AirOutManager airOutManager; //On Level 4
 
     [SerializeField] MeshRenderer boxTop;
     [SerializeField] MeshRenderer boxFront;
@@ -22,11 +24,13 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Text Objects")]
+    [SerializeField] GameObject intro;
     [SerializeField] GameObject levelTitleContainer;
     [SerializeField] GameObject levelDescriptionContainer;
     [SerializeField] GameObject interactiveDescriptionContainer;
     [SerializeField] GameObject waitButton;
     [SerializeField] GameObject nextButton;
+    [SerializeField] GameObject restartButton;
     [SerializeField] GameObject releaseOptions;
 
     [Header("Text")]
@@ -47,6 +51,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] string absorbSetUpWaitText;
     [SerializeField] string[] absorbTitles;
     [SerializeField][TextArea] string[] absorbDescriptions;
+
+    [SerializeField] string releaseTitle;
+    [SerializeField][TextArea] string releaseDescription;
+
+    [SerializeField] string airOutTitle;
+    [SerializeField][TextArea] string airOutDescription;
 
     //private variables
     int releaseChoice = 0;
@@ -83,6 +93,9 @@ public class GameManager : MonoBehaviour
                 {
                     cameraMover.UpdateCameraPosition();
 
+                    intro.SetActive(false);
+
+                    nextButton.SetActive(true);
                     waitButton.SetActive(true);
 
                     currentState = STATE.AirInSetUp;
@@ -190,8 +203,8 @@ public class GameManager : MonoBehaviour
             case STATE.Release:
                 if (!cameraMover.isMoving && !setUpState)
                 {
-                    //SetLevelText(true);
-                    //SetLevelTextContent(absorbSetUpTitle, absorbSetUpDescription);
+                    SetLevelText(true);
+                    SetLevelTextContent(releaseTitle, releaseDescription);
                     
                     hydroswingManager.NextStep();
                     setUpState = true;
@@ -200,8 +213,18 @@ public class GameManager : MonoBehaviour
                     //boxTop.enabled = false;
                 }
 
+                if(hydroswingManager.currentState == HydroswingManager.STATE.End)
+                {
+                    cameraMover.UpdateCameraPosition();
+                    currentState = STATE.AirOut;
+                    SetLevelText(false);
 
+                    setUpState = false;
+
+                    boxFront.enabled = true;
+                }
                 break;
+            /*
             case STATE.Water:
 
                 if (nextState)
@@ -218,6 +241,20 @@ public class GameManager : MonoBehaviour
                     cameraMover.UpdateCameraPosition();
                     currentState = STATE.AirOut;
                     nextState = false;
+                }
+                break;
+            */
+            case STATE.AirOut:
+                if (!cameraMover.isMoving && !setUpState)
+                {
+                    SetLevelText(true);
+                    SetLevelTextContent(airOutTitle, airOutDescription);
+                    
+                    restartButton.SetActive(true);
+
+                    airOutManager.SetUp();
+
+                    setUpState = true;
                 }
                 break;
         }
@@ -261,6 +298,11 @@ public class GameManager : MonoBehaviour
     public void Wait()
     {
         
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ReleaseChoice(int choice)

@@ -21,6 +21,6 @@ public class SorbentMoleculeMovement : MonoBehaviour
         if (!inPlace) this.transform.position += new Vector3(movementSpeed * Time.deltaTime, 0, 0);
         else if(col.enabled && inPlace) col.enabled = false;
 
-        if(this.transform.position.x > 1) Destroy(this.gameObject);
+        if(this.transform.position.x > 10) Destroy(this.gameObject);
     }
 }
