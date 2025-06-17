@@ -20,15 +20,16 @@ public class CameraMover : MonoBehaviour
     void Update()
     {
         //mainCamera.transform.rotation != cameraPositions[currentCameraPosition].rotation
-        if (isMoving && mainCamera.transform.position != cameraPositions[currentCameraPosition].position) {
-            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPositions[currentCameraPosition].position, cameraMoveSpeed * Time.deltaTime);
-            //mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, cameraPositions[currentCameraPosition].rotation, cameraRotateSpeed * Time.deltaTime);
+        if (isMoving && mainCamera.transform.position != cameraPositions[currentCameraPosition].position
+            || mainCamera.transform.rotation != cameraPositions[currentCameraPosition].rotation) {
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, cameraPositions[currentCameraPosition].position, cameraMoveSpeed * Time.deltaTime);
+            mainCamera.transform.rotation = Quaternion.RotateTowards(mainCamera.transform.rotation, cameraPositions[currentCameraPosition].rotation, cameraRotateSpeed * Time.deltaTime);
 
-            if((mainCamera.transform.position == cameraPositions[currentCameraPosition].position))
+            if((mainCamera.transform.position == cameraPositions[currentCameraPosition].position) && mainCamera.transform.rotation == cameraPositions[currentCameraPosition].rotation)
             {
                 isMoving = false;
                 mainCamera.transform.position = cameraPositions[currentCameraPosition].position;
-                //mainCamera.transform.rotation = cameraPositions[currentCameraPosition].rotation;
+                mainCamera.transform.rotation = cameraPositions[currentCameraPosition].rotation;
             }
         }
     }
@@ -40,5 +41,10 @@ public class CameraMover : MonoBehaviour
         if (currentCameraPosition < cameraPositions.Length) {
             isMoving = true;
         }
+    }
+
+    public void DebugCamera(int camNum)
+    {
+        currentCameraPosition = camNum;
     }
 }

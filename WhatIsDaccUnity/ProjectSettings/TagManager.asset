@@ -8,6 +8,7 @@ TagManager:
   - Molecule
   - Fan
   - Water
+  - Sorbent
   layers:
   - Default
   - TransparentFX

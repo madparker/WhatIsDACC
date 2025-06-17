@@ -24,11 +24,12 @@ public class WaterSpoutBehavior : MonoBehaviour
             SpawnWater();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space)) Debug.Log(transform.position.x);
     }
 
     void SpawnWater()
     {
-        Instantiate(waterPrefab, new Vector3(this.transform.position.x, this.transform.position.y - 0.1f, this.transform.position.z - 0.2f), Quaternion.identity);
+        Instantiate(waterPrefab, new Vector3(this.transform.position.x - 0.1f, this.transform.position.y - 0.1f, this.transform.position.z - 0.13f), Quaternion.identity);
     }
 
     void TrackMouse()
@@ -42,6 +43,14 @@ public class WaterSpoutBehavior : MonoBehaviour
             worldPosition = hitData.point;
         }
 
-        this.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z + 0.15f);
+        //Keeps tap from going ON sorbent
+        if (worldPosition.y >= 1.08)
+        {
+            this.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z + 0.15f);
+        }
+        else {
+            this.transform.position = new Vector3(-0.04f, 1.08f, worldPosition.z + 0.15f);
+        }
+
     }
 }

@@ -11,6 +11,11 @@ public class HydroswingManager : MonoBehaviour
     [SerializeField] int carbonCount = 15;
     [SerializeField] GameObject waterTap;
 
+    [Header("Box Hinge")]
+    [SerializeField] GameObject hinge;
+    [SerializeField] Transform openTransform;
+    [SerializeField] Transform closeTransform;
+
     
     int currentSorbent;
 
@@ -23,7 +28,7 @@ public class HydroswingManager : MonoBehaviour
 
     public enum STATE
     {
-        Idle, Move, Fill, Clear, Return, End
+        Idle, SetUp, Move, Fill, Clear, Return, Close, End
     }
 
     public STATE currentState = STATE.Idle;
@@ -51,6 +56,15 @@ public class HydroswingManager : MonoBehaviour
             case STATE.Idle:
 
                 break;
+            case STATE.SetUp:
+
+                hinge.transform.rotation = Quaternion.RotateTowards(hinge.transform.rotation, openTransform.rotation, 30 * Time.deltaTime);
+                if (hinge.transform.rotation == openTransform.rotation)
+                {
+                    currentState = STATE.Move;
+                }
+
+                break;
             case STATE.Move:
                 if (sorbents[currentSorbent].transform.position != sorbentGameTransform.position)
                 {
@@ -64,7 +78,7 @@ public class HydroswingManager : MonoBehaviour
                     }
                     else
                     {
-                        FillSorbent();
+
                         currentState = STATE.Clear;
                         waterTap.SetActive(true);
                         sorbents[currentSorbent].GetComponent<BoxCollider>().isTrigger = false;
@@ -76,12 +90,11 @@ public class HydroswingManager : MonoBehaviour
                 int nullCount = 0;
                 for(int i = 0; i < carbonCount; i++)
                 {
-                    if (carbonMolecules[i] == null) nullCount++;
+                    if (carbonMolecules[i].gameObject == null) nullCount++;
                 }
 
                 if (nullCount == carbonCount) {
                     waterTap.SetActive(false);
-
                     currentState = STATE.Return;
                 } 
 
@@ -102,14 +115,24 @@ public class HydroswingManager : MonoBehaviour
                         if(currentSorbent < 2)
                         {
                             currentSorbent++;
+
                             sorbents[currentSorbent].GetComponent<SorbentBehavior>().ClearSelf();
+                            FillSorbent(sorbents[currentSorbent]);
+
                             currentState = STATE.Move;
                         } else
                         {
-                            currentState = STATE.End;
+                            currentState = STATE.Close;
                         }
                         
                     }
+                }
+                break;
+            case STATE.Close:
+                hinge.transform.rotation = Quaternion.RotateTowards(hinge.transform.rotation, closeTransform.rotation, 30 * Time.deltaTime);
+                if (hinge.transform.rotation == closeTransform.rotation)
+                {
+                    currentState = STATE.End;
                 }
                 break;
             case STATE.End:
@@ -121,29 +144,33 @@ public class HydroswingManager : MonoBehaviour
 
     public void NextStep()
     {
-        currentState = STATE.Move;
+        currentState = STATE.SetUp;
+
         sorbents[currentSorbent].GetComponent<SorbentBehavior>().ClearSelf();
+        FillSorbent(sorbents[currentSorbent]);
+        
     }
 
-    void FillSorbent()
+    void FillSorbent(GameObject emptySorbent)
     {
-        float currentX = sorbents[currentSorbent].transform.position.x - 0.2f;
-        float currentY = sorbents[currentSorbent].transform.position.y + 0.1f;
-        float currentZ = sorbents[currentSorbent].transform.position.z;
+        float currentX = emptySorbent.transform.position.x + 0.05f;
+        float currentY = emptySorbent.transform.position.y + 0.1f;
+        float currentZ = emptySorbent.transform.position.z - 0.2f;
 
         int firstThreshold = (carbonCount / 3) - 1;
         int secondThreshold = firstThreshold + (carbonCount / 3);
 
         for (int i = 0; i < carbonCount; i++) {
-            carbonMolecules[i] = Instantiate(carbonPrefab, new Vector3(currentX, currentY, currentZ), Quaternion.identity);
+            carbonMolecules[i] = Instantiate(carbonPrefab, new Vector3(currentX, currentY, currentZ), emptySorbent.transform.rotation);
+            carbonMolecules[i].GetComponent<PhysicalCarbonBehavior>().SetUpParent(emptySorbent);
 
-            currentX += 0.1f;
+            currentZ += 0.1f;
             
             if(i == firstThreshold || i == secondThreshold)
             {
-                currentX = sorbents[currentSorbent].transform.position.x - 0.2f;
+                currentZ = emptySorbent.transform.position.z - 0.2f;
                 currentY -= 0.1f;
-                currentZ -= 0.05f;
+                currentX -= 0.1f;
             }
 
         }

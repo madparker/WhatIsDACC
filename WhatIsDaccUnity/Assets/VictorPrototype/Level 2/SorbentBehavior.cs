@@ -66,7 +66,7 @@ public class SorbentBehavior : MonoBehaviour
     {
         for (int i = 0; i < molecules.Length; i++)
         {
-            Destroy(molecules[i].gameObject);
+            if(molecules[i] != null) Destroy(molecules[i].gameObject);
         }
     }
 }

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("External Components")]
     [SerializeField] CameraMover cameraMover; //On Camera Manager
+    [SerializeField] IntroductionManager introductionManager; //On Introduction
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
     [SerializeField] SorbentManager sorbentManager; //On Level 2
     [SerializeField] HydroswingManager hydroswingManager; //On Level 3
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Text Objects")]
-    [SerializeField] GameObject intro;
     [SerializeField] GameObject levelTitleContainer;
     [SerializeField] GameObject levelDescriptionContainer;
     [SerializeField] GameObject interactiveDescriptionContainer;
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
                 {
                     cameraMover.UpdateCameraPosition();
 
-                    intro.SetActive(false);
+                    introductionManager.StartGame();
 
                     nextButton.SetActive(true);
                     waitButton.SetActive(true);
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
 
                     sorbentManager.SetUp();
                     
-                    boxFront.enabled = false;
+                    //boxFront.enabled = false;
                     //boxTop.enabled = false;
                 }
 
@@ -224,26 +224,6 @@ public class GameManager : MonoBehaviour
                     boxFront.enabled = true;
                 }
                 break;
-            /*
-            case STATE.Water:
-
-                if (nextState)
-                {
-                    cameraMover.UpdateCameraPosition();
-                    currentState = STATE.Vacuum;
-                    nextState = false;
-                }
-                break;
-            case STATE.Vacuum:
-
-                if (nextState)
-                {
-                    cameraMover.UpdateCameraPosition();
-                    currentState = STATE.AirOut;
-                    nextState = false;
-                }
-                break;
-            */
             case STATE.AirOut:
                 if (!cameraMover.isMoving && !setUpState)
                 {
@@ -258,6 +238,48 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
+
+        //DEBUG
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentState = STATE.Release;
+
+            cameraMover.DebugCamera(3);
+
+            introductionManager.StartGame();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+        }
+        /*
+        
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentState = STATE.AirInSetUp;
+            nextState = true;
+            cameraMover.DebugCamera(1);
+        } else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentState = STATE.AirIn;
+            nextState = true;
+        } else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            currentState = STATE.Absorb;
+            nextState = true;
+        } else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            currentState = STATE.Release;
+            nextState = true;
+        }
+        */
+
     }
 
     void SetLevelText(bool textState)
