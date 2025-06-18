@@ -145,6 +145,10 @@ public class GameManager : MonoBehaviour
                 waitButton.SetActive(!airIsEmpty); //Checks if the array of molecules is empty
                 moleculeManager.ToggleFan(!airIsEmpty); //Turns off the fan
 
+                if (Input.GetMouseButtonDown(0)) SetDescription(false);
+                if (Input.GetMouseButtonDown(1)) SetDescription(!levelDescriptionContainer.activeInHierarchy);
+
+
                 if (nextState)
                 {
                     DeactivateInteractive();
@@ -212,6 +216,9 @@ public class GameManager : MonoBehaviour
                     //boxFront.enabled = false;
                     //boxTop.enabled = false;
                 }
+
+                if(Input.GetMouseButtonDown(0)) SetDescription(false);
+                if (Input.GetMouseButtonDown(1)) SetDescription(!levelDescriptionContainer.activeInHierarchy);
 
                 if(hydroswingManager.currentState == HydroswingManager.STATE.End)
                 {

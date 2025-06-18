@@ -29,7 +29,6 @@ public class MoleculeBehavior : MonoBehaviour
         if(isBlown && Input.GetMouseButton(0))
         {
             this.transform.position = Vector3.MoveTowards(this.transform.position, goalPosition, Time.deltaTime / 4);
-            Debug.Log("isBlowing!");
 
             if(this.transform.position == goalPosition) Destroy(this.gameObject); 
         } else
