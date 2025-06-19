@@ -9,6 +9,7 @@ TagManager:
   - Fan
   - Water
   - Sorbent
+  - Vacuum
   layers:
   - Default
   - TransparentFX

@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
     [SerializeField] SorbentManager sorbentManager; //On Level 2
     [SerializeField] HydroswingManager hydroswingManager; //On Level 3
-    [SerializeField] AirOutManager airOutManager; //On Level 4
+    [SerializeField] CaptureManager captureManager; //On Level 4
+    [SerializeField] AirOutManager airOutManager; //On Level 5
 
     [SerializeField] MeshRenderer boxTop;
     [SerializeField] MeshRenderer boxFront;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject nextButton;
     [SerializeField] GameObject restartButton;
     [SerializeField] GameObject releaseOptions;
+    [SerializeField] GameObject toggleInstructions;
 
     [Header("Text")]
     [SerializeField] TextMeshProUGUI levelTitle;
@@ -55,6 +57,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] string releaseTitle;
     [SerializeField][TextArea] string releaseDescription;
 
+    [SerializeField] string captureTitle;
+    [SerializeField][TextArea] string captureDescription;
+
     [SerializeField] string airOutTitle;
     [SerializeField][TextArea] string airOutDescription;
 
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     public enum STATE
     {
-        Intro, AirInSetUp, AirIn, Absorb, Release, Water, Vacuum, AirOut
+        Intro, AirInSetUp, AirIn, Absorb, Release, Capture, AirOut
     }
 
     public STATE currentState = STATE.Intro;
@@ -157,6 +162,7 @@ public class GameManager : MonoBehaviour
 
                     //waitButton.SetActive(true);
                     nextButton.SetActive(false);
+                    toggleInstructions.SetActive(false);
 
                     SetLevelText(false);
                     DeactivateInteractive();
@@ -178,8 +184,6 @@ public class GameManager : MonoBehaviour
 
                     sorbentManager.SetUp();
                     
-                    //boxFront.enabled = false;
-                    //boxTop.enabled = false;
                 }
 
                 if(sorbentManager.isFull && !releaseOptions.activeInHierarchy)
@@ -187,6 +191,7 @@ public class GameManager : MonoBehaviour
                     releaseOptions.SetActive(true);
                     SetDescription(false);
                     ActivateInteractive(absorbTitles[releaseChoice], absorbDescriptions[releaseChoice]);
+                    toggleInstructions.SetActive(false);
                 }
 
 
@@ -202,6 +207,7 @@ public class GameManager : MonoBehaviour
 
                     SetLevelText(false);
                     DeactivateInteractive();
+                    toggleInstructions.SetActive(false);
                 }
                 break;
             case STATE.Release:
@@ -209,27 +215,50 @@ public class GameManager : MonoBehaviour
                 {
                     SetLevelText(true);
                     SetLevelTextContent(releaseTitle, releaseDescription);
-                    
+
                     hydroswingManager.NextStep();
                     setUpState = true;
-
-                    //boxFront.enabled = false;
-                    //boxTop.enabled = false;
                 }
 
                 if(Input.GetMouseButtonDown(0)) SetDescription(false);
                 if (Input.GetMouseButtonDown(1)) SetDescription(!levelDescriptionContainer.activeInHierarchy);
 
-                if(hydroswingManager.currentState == HydroswingManager.STATE.End)
+                if (hydroswingManager.currentState == HydroswingManager.STATE.End)
                 {
                     cameraMover.UpdateCameraPosition();
-                    currentState = STATE.AirOut;
+                    currentState = STATE.Capture;
                     SetLevelText(false);
+                    toggleInstructions.SetActive(false);
 
                     setUpState = false;
 
                     boxFront.enabled = true;
                 }
+                break;
+            case STATE.Capture:
+                if (!cameraMover.isMoving && !setUpState)
+                {
+                    SetLevelText(true);
+                    SetLevelTextContent(captureTitle, captureDescription);
+
+                    captureManager.SetUp();
+                    setUpState = true;
+                }
+
+                if (Input.GetMouseButtonDown(0)) SetDescription(false);
+                if (Input.GetMouseButtonDown(1)) SetDescription(!levelDescriptionContainer.activeInHierarchy);
+
+                if (captureManager.currentState == CaptureManager.STATE.End)
+                {
+                    cameraMover.UpdateCameraPosition();
+                    currentState = STATE.AirOut;
+                    SetLevelText(false);
+                    toggleInstructions.SetActive(false);
+
+                    setUpState = false;
+                }
+
+
                 break;
             case STATE.AirOut:
                 if (!cameraMover.isMoving && !setUpState)
@@ -247,7 +276,7 @@ public class GameManager : MonoBehaviour
         }
 
         //DEBUG
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Alpha1)) //RELEASE
         {
             currentState = STATE.Release;
 
@@ -265,27 +294,23 @@ public class GameManager : MonoBehaviour
 
             nextState = true;
         }
-        /*
-        
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Alpha2)) //CAPTURE
         {
-            currentState = STATE.AirInSetUp;
+            currentState = STATE.Capture;
+            cameraMover.DebugCamera(4);
+            introductionManager.StartGame();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
             nextState = true;
-            cameraMover.DebugCamera(1);
-        } else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            currentState = STATE.AirIn;
-            nextState = true;
-        } else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            currentState = STATE.Absorb;
-            nextState = true;
-        } else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            currentState = STATE.Release;
-            nextState = true;
+
         }
-        */
 
     }
 
@@ -304,6 +329,7 @@ public class GameManager : MonoBehaviour
     void SetDescription(bool textState)
     {
         levelDescriptionContainer.SetActive(textState);
+        toggleInstructions.SetActive(!textState);
     }
 
     public void ActivateInteractive(string title, string description)

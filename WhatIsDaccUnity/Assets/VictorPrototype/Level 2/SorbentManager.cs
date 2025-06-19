@@ -37,7 +37,7 @@ public class SorbentManager : MonoBehaviour
 
     void SpawnMolecule()
     {
-        int rand = Random.Range(0, 3);
+        int rand = Random.Range(0, 5);
         float randY = Random.Range(-0.1f, 0.1f);
         float randZ = Random.Range(-0.2f, 0.2f);
 
@@ -54,6 +54,10 @@ public class SorbentManager : MonoBehaviour
                 break;
             case 2:
                 Instantiate(nitrogenPrefab, spawnLocation, Quaternion.identity);
+                break;
+            default:
+                carbonCount++;
+                Instantiate(carbonPrefab, spawnLocation, Quaternion.identity);
                 break;
         }
 
