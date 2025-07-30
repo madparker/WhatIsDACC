@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class PipeFlipper : MonoBehaviour
+{
+    Camera cam;
+    Vector3 screenPosition;
+    Vector3 worldPosition;
+    Transform _selection;
+
+    GameManager gameManager;
+
+    //Changable Variables
+    [SerializeField] float maxDistance;
+    [SerializeField] LayerMask layerMask;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        cam = Camera.main;
+        gameManager = this.GetComponent<GameManager>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        screenPosition = Input.mousePosition;
+
+        Ray ray = cam.ScreenPointToRay(screenPosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hitData, maxDistance, layerMask))
+        {
+            worldPosition = hitData.point;
+            var selection = hitData.transform;
+
+            _selection = selection;
+        }
+
+        this.transform.position = new Vector3(worldPosition.x, worldPosition.y, this.transform.position.z);
+
+    }
+}
