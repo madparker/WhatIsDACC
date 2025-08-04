@@ -18,16 +18,19 @@ EditorUserSettings:
       value: 0105555f0154515d0e5c5f24147606444315497d7d2970697a2f4431e7b5316c
       flags: 0
     RecentlyUsedSceneGuid-3:
-      value: 0201040004065b0b58565d27157a5e44124e1a7e79717f337d781f31b3e33139
-      flags: 0
-    RecentlyUsedSceneGuid-4:
-      value: 0154505556565d0f0f560f2416775c44174f412c2829236029784430e7b2603b
-      flags: 0
-    RecentlyUsedSceneGuid-5:
       value: 530105555c040f0b0f5e547715200b44144e4f722e787567297f4865bbb1373b
       flags: 0
-    RecentlyUsedSceneGuid-6:
+    RecentlyUsedSceneGuid-4:
+      value: 55060d03570d0d5f545c097548750c4444154f73787c72647a7b4f6be4b7643b
+      flags: 0
+    RecentlyUsedSceneGuid-5:
       value: 0101015f5c500a590b58557016270744154e1a73287b23677b2c4b35b2e46d3c
+      flags: 0
+    RecentlyUsedSceneGuid-6:
+      value: 0154505556565d0f0f560f2416775c44174f412c2829236029784430e7b2603b
+      flags: 0
+    RecentlyUsedSceneGuid-7:
+      value: 0201040004065b0b58565d27157a5e44124e1a7e79717f337d781f31b3e33139
       flags: 0
     RecentlyUsedScenePath-0:
       value: 22424703114646741d0b0203193110311a12001e293b32032e2c1336acf53a31f6fe
@@ -55,6 +58,9 @@ EditorUserSettings:
       flags: 0
     RecentlyUsedScenePath-8:
       value: 22424703114646741d0b0203193110231512162f3f67073c28312936f1f4073be7e933a7f234362820
+      flags: 0
+    lightmappingBakingProfile:
+      value: 51
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
