@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] IntroductionManager introductionManager; //On Introduction
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
     [SerializeField] SorbentManager sorbentManager; //On Level 2
-    [SerializeField] HydroswingManager hydroswingManager; //On Level 3
+    [SerializeField] HydroswingManager hydroswingManager; //On Level 3-A
+    [SerializeField] ElectroswingManager electroswingManager; //On Level 3-C
     [SerializeField] CaptureManager captureManager; //On Level 4
     [SerializeField] AirOutManager airOutManager; //On Level 5
 
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     public enum STATE
     {
-        Intro, AirInSetUp, AirIn, Absorb, Release, Capture, AirOut
+        Intro, AirInSetUp, AirIn, Absorb, Hydro, Electro, Temp, Capture, AirOut
     }
 
     public STATE currentState = STATE.Intro;
@@ -197,8 +198,24 @@ public class GameManager : MonoBehaviour
 
                 if (nextState)
                 {
-                    cameraMover.UpdateCameraPosition();
-                    currentState = STATE.Release;
+                    //cameraMover.UpdateCameraPosition();
+
+                    switch(releaseChoice)
+                    {
+                        case 0:
+                            currentState = STATE.Hydro;
+                            cameraMover.UpdateCameraPosition();
+                            break;
+                        case 1:
+                            currentState = STATE.Temp;
+                            cameraMover.PrecisionUpdateCameraPosition(5);
+                            break;
+                        case 2:
+                            currentState = STATE.Electro;
+                            cameraMover.PrecisionUpdateCameraPosition(6);
+                            break;
+
+                    }
 
                     nextState = false;
                     setUpState = false;
@@ -210,7 +227,7 @@ public class GameManager : MonoBehaviour
                     toggleInstructions.SetActive(false);
                 }
                 break;
-            case STATE.Release:
+            case STATE.Hydro:
                 if (!cameraMover.isMoving && !setUpState)
                 {
                     SetLevelText(true);
@@ -220,7 +237,7 @@ public class GameManager : MonoBehaviour
                     setUpState = true;
                 }
 
-                if(Input.GetMouseButtonDown(0)) SetDescription(false);
+                if (Input.GetMouseButtonDown(0)) SetDescription(false);
                 if (Input.GetMouseButtonDown(1)) SetDescription(!levelDescriptionContainer.activeInHierarchy);
 
                 if (hydroswingManager.currentState == HydroswingManager.STATE.End)
@@ -234,6 +251,18 @@ public class GameManager : MonoBehaviour
 
                     boxFront.enabled = true;
                 }
+                break;
+            case STATE.Electro:
+                if (!cameraMover.isMoving && !setUpState)
+                {
+                    //SetLevelText(true);
+                    //SetLevelTextContent(releaseTitle, releaseDescription);
+
+                    electroswingManager.SetUp();
+                    setUpState = true;
+                }
+                break;
+            case STATE.Temp:
                 break;
             case STATE.Capture:
                 if (!cameraMover.isMoving && !setUpState)
@@ -276,9 +305,9 @@ public class GameManager : MonoBehaviour
         }
 
         //DEBUG
-        if(Input.GetKeyDown(KeyCode.Alpha1)) //RELEASE
+        if(Input.GetKeyDown(KeyCode.Alpha1)) //HYDRO
         {
-            currentState = STATE.Release;
+            currentState = STATE.Hydro;
 
             cameraMover.DebugCamera(3);
 
