@@ -208,11 +208,11 @@ public class GameManager : MonoBehaviour
                             break;
                         case 1:
                             currentState = STATE.Temp;
-                            cameraMover.PrecisionUpdateCameraPosition(5);
+                            cameraMover.PrecisionUpdateCameraPosition(4);
                             break;
                         case 2:
                             currentState = STATE.Electro;
-                            cameraMover.PrecisionUpdateCameraPosition(6);
+                            cameraMover.PrecisionUpdateCameraPosition(5);
                             break;
 
                     }
@@ -323,7 +323,24 @@ public class GameManager : MonoBehaviour
 
             nextState = true;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2)) //CAPTURE
+        if(Input.GetKeyDown(KeyCode.Alpha2)) //Electro
+        {
+            currentState = STATE.Electro;
+            cameraMover.PrecisionUpdateCameraPosition(5);
+            introductionManager.StartGame();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) //CAPTURE
         {
             currentState = STATE.Capture;
             cameraMover.DebugCamera(4);
