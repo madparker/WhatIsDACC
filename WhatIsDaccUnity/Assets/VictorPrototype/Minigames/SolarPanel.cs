@@ -12,6 +12,11 @@ public class SolarPanel : MonoBehaviour
 
     [SerializeField] bool isDebug;
 
+    public bool moveUp;
+    public bool moveDown;
+    public bool moveLeft;
+    public bool moveRight;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,20 +26,20 @@ public class SolarPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (moveLeft)
         {
             solarPanelParent.transform.Rotate(0, parentRotationSpeed * Time.deltaTime, 0);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (moveRight)
         {
             solarPanelParent.transform.Rotate(0, -parentRotationSpeed * Time.deltaTime, 0);
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (moveUp)
         {
             panelPivot.transform.Rotate(0, 0, pivotRotationSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (moveDown)
         {
             panelPivot.transform.Rotate(0, 0, -pivotRotationSpeed * Time.deltaTime);
         }
