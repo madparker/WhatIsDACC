@@ -11,6 +11,8 @@ public class ElectroswingManager : MonoBehaviour
     [SerializeField] Transform goalPivot; //Goal pivot to check rotation against
     [SerializeField] Transform debugPanel; //Solar panel to check rotation against goal pivot
     [SerializeField] Slider slider;
+    [SerializeField] Slider batteryLevel;
+    [SerializeField] GameObject uiElements;
 
     bool upCheck = false;
     bool forwardCheck = false;
@@ -29,6 +31,8 @@ public class ElectroswingManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        uiElements.SetActive(false);
+        
         for (int i = 0; i < solarPanels.Count; i++)
         {
             solarPanels[i].GetComponent<SolarPanel>().enabled = false;
@@ -43,20 +47,6 @@ public class ElectroswingManager : MonoBehaviour
                 break;
             case STATE.Release:
 
-                if(Input.GetKeyDown(KeyCode.Space))
-                {
-                    Vector3 goalUp = Vector3.zero;
-
-                    float randX = Random.Range(-0.3f, 0.3f);
-                    float randY = Random.Range(0.8f, 1);
-                    float randZ = Random.Range(-0.3f, 0.3f);
-
-                    goalUp = new Vector3(randX, randY, randZ).normalized;
-
-                    Debug.Log(goalUp);
-
-                    goalPivot.transform.up = goalUp;
-                }
                
                 upCheck = (debugPanel.up - goalPivot.up).magnitude < 0.5f;
                 forwardCheck = ((debugPanel.forward - goalPivot.forward).magnitude) < 0.5f;
@@ -72,18 +62,19 @@ public class ElectroswingManager : MonoBehaviour
                     electricityContained += Time.deltaTime / 2;
                 }
 
-                    slider.value = 1 - (debugPanel.up - goalPivot.up).magnitude;
-                //slider.value = electricityContained;
+                slider.value = 1 - (debugPanel.up - goalPivot.up).magnitude;
 
+                Debug.Log(slider.value);
 
-                //Debug.Log("up: " + (debugPanel.up - goalPivot.up).magnitude + " forward: " + (debugPanel.forward - goalPivot.forward).magnitude + " right: " + (debugPanel.right - goalPivot.right).magnitude);
-                //Debug.Log(upCheck.ToString() + forwardCheck.ToString() + rightCheck.ToString());\
+                if (slider.value > 0.965) {
 
-                //Debug.Log((debugPanel.up - goalPivot.up).magnitude);
-                //Debug.Log(debugPanel.up);
+                    batteryLevel.value += Time.deltaTime / 4;
+                }
 
-
-                //if (upCheck && forwardCheck) currentState = STATE.End;
+                if (batteryLevel.value == 1)
+                {
+                    currentState = STATE.End;
+                }
 
                 break;
             case STATE.End:
@@ -110,9 +101,7 @@ public class ElectroswingManager : MonoBehaviour
 
         goalPivot.transform.up = goalUp;
 
-        //while(goalUp.magnitude != )
-
-
+        uiElements.SetActive(true);
 
         currentState = STATE.Release;
     }
@@ -120,40 +109,44 @@ public class ElectroswingManager : MonoBehaviour
 
     public void StartMove(int direction)
     {
-        switch (direction) { 
-            case 0:
+        if (currentState == STATE.Release) {
+            switch (direction)
+            {
+                case 0:
 
-                for (int i = 0; i < solarPanels.Count; i++)
-                {
-                    solarPanels[i].GetComponent<SolarPanel>().moveUp = true;
-                }
+                    for (int i = 0; i < solarPanels.Count; i++)
+                    {
+                        solarPanels[i].GetComponent<SolarPanel>().moveUp = true;
+                    }
 
-                break;
-            case 1:
+                    break;
+                case 1:
 
-                for (int i = 0; i < solarPanels.Count; i++)
-                {
-                    solarPanels[i].GetComponent<SolarPanel>().moveDown = true;
-                }
+                    for (int i = 0; i < solarPanels.Count; i++)
+                    {
+                        solarPanels[i].GetComponent<SolarPanel>().moveDown = true;
+                    }
 
-                break;
-            case 2:
+                    break;
+                case 2:
 
-                for (int i = 0; i < solarPanels.Count; i++)
-                {
-                    solarPanels[i].GetComponent<SolarPanel>().moveLeft = true;
-                }
+                    for (int i = 0; i < solarPanels.Count; i++)
+                    {
+                        solarPanels[i].GetComponent<SolarPanel>().moveLeft = true;
+                    }
 
-                break;
-            case 3:
+                    break;
+                case 3:
 
-                for (int i = 0; i < solarPanels.Count; i++)
-                {
-                    solarPanels[i].GetComponent<SolarPanel>().moveRight = true;
-                }
+                    for (int i = 0; i < solarPanels.Count; i++)
+                    {
+                        solarPanels[i].GetComponent<SolarPanel>().moveRight = true;
+                    }
 
-                break;
+                    break;
+            }
         }
+        
     }
 
     public void StopMove(int direction)
