@@ -74,6 +74,13 @@ public class ElectroswingManager : MonoBehaviour
                 if (batteryLevel.value == 1)
                 {
                     currentState = STATE.End;
+
+                    for (int i = 0; i < solarPanels.Count; i++)
+                    {
+                        solarPanels[i].GetComponent<SolarPanel>().enabled = false;
+                    }
+
+                    uiElements.SetActive(false);
                 }
 
                 break;

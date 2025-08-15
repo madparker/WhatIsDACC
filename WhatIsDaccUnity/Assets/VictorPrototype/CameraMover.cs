@@ -43,9 +43,10 @@ public class CameraMover : MonoBehaviour
         }
     }
 
-    public void PrecisionUpdateCameraPosition(int camNum)
+    public void PrecisionUpdateCameraPosition(int camNum, float camSpeed)
     {
         currentCameraPosition = camNum;
+        cameraMoveSpeed = camSpeed;
 
         if (currentCameraPosition < cameraPositions.Length)
         {
