@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
 
                 if (hydroswingManager.currentState == HydroswingManager.STATE.End)
                 {
-                    cameraMover.UpdateCameraPosition();
+                    cameraMover.PrecisionUpdateCameraPosition(6, 2);
                     currentState = STATE.Capture;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
