@@ -29,7 +29,7 @@ public class PuzzleManager : MonoBehaviour
             int correctCount = 0;
             for (int i = 0; i < correctPieces.Length; i++)
             {
-                if (correctPieces[i].GetComponent<PuzzleElementBehavior>().currentPosition == correctPieces[i].GetComponent<PuzzleElementBehavior>().correctPosition) {
+                if (correctPieces[i].GetComponent<PuzzleElementBehavior>().isInPosition) {
                     correctCount++;
                 }
             }
