@@ -208,11 +208,11 @@ public class GameManager : MonoBehaviour
                             break;
                         case 1:
                             currentState = STATE.Temp;
-                            cameraMover.PrecisionUpdateCameraPosition(4, 10);
+                            cameraMover.PrecisionUpdateCameraPosition(4);
                             break;
                         case 2:
                             currentState = STATE.Electro;
-                            cameraMover.PrecisionUpdateCameraPosition(5, 10);
+                            cameraMover.PrecisionUpdateCameraPosition(5);
                             break;
 
                     }
@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
 
                 if (hydroswingManager.currentState == HydroswingManager.STATE.End)
                 {
-                    cameraMover.PrecisionUpdateCameraPosition(6, 2);
+                    cameraMover.PrecisionUpdateCameraPosition(6);
                     currentState = STATE.Capture;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
 
                 if(electroswingManager.currentState == ElectroswingManager.STATE.End)
                 {
-                    cameraMover.PrecisionUpdateCameraPosition(6, 10);
+                    cameraMover.PrecisionUpdateCameraPosition(6);
                     currentState = STATE.AirOut;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
@@ -336,7 +336,7 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha2)) //Electro
         {
             currentState = STATE.Electro;
-            cameraMover.PrecisionUpdateCameraPosition(5, 10);
+            cameraMover.PrecisionUpdateCameraPosition(5);
             introductionManager.StartGame();
 
             nextState = false;
