@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
 
 
     //Public Variables
+    [Header("UI Objects")]
+    [SerializeField] GameObject airInUi;
 
 
     [Header("Text Objects")]
@@ -117,6 +120,9 @@ public class GameManager : MonoBehaviour
                 {
                     SetLevelText(true);
                     SetLevelTextContent(airInSetUpTitle, airInSetUpDescription);
+
+                    //airInUi.SetActive(true);
+
                     moleculeManager.ActivateMolecules();
 
                     setUpState = true;
@@ -370,6 +376,35 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void NextState()
+    {
+        nextState = true;
+    }
+
+    void SetUpNextState(STATE next)
+    {
+        switch(next)
+        {
+            case STATE.AirInSetUp:
+                break;
+            case STATE.AirIn:
+                break;
+            case STATE.Absorb:
+                break;
+            case STATE.Hydro:
+                break;
+            case STATE.Electro:
+                break;
+            case STATE.Temp:
+                break;
+            case STATE.Capture:
+                break;
+            case STATE.AirOut:
+                break;
+
+        }
+    }
+
     void SetLevelText(bool textState)
     {
         levelTitleContainer.SetActive(textState);
@@ -401,15 +436,8 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void NextState()
-    {
-        nextState = true;
-    }
+    
 
-    public void Wait()
-    {
-        
-    }
 
     public void Restart()
     {

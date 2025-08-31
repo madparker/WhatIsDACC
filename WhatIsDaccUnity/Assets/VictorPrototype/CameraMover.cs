@@ -24,7 +24,7 @@ public class CameraMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        isMoving = mainCamera.GetComponent<CinemachineBrain>().IsBlending;
     }
 
     public void UpdateCameraPosition()
