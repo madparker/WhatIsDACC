@@ -76,10 +76,10 @@ public class GameManager : MonoBehaviour
 
     public enum STATE
     {
-        Intro, AirInSetUp, AirIn, Absorb, Hydro, Electro, Temp, Capture, AirOut
+        Start, Intro, AirInSetUp, AirIn, Absorb, Hydro, Electro, Temp, Capture, AirOut
     }
 
-    public STATE currentState = STATE.Intro;
+    public STATE currentState = STATE.Start;
 
     //Private Variables
     bool nextState = false;
@@ -100,13 +100,28 @@ public class GameManager : MonoBehaviour
     {
         switch (currentState)
         {
+            case STATE.Start:
+                if (nextState)
+                {
+                    cameraMover.UpdateCameraPosition();
+
+                    introductionManager.StartGame();
+
+                    currentState = STATE.Intro;
+
+                    nextState = false;
+                    setUpState = false;
+                }
+
+                break;
+
             case STATE.Intro:
 
                 if(nextState)
                 {
                     cameraMover.UpdateCameraPosition();
 
-                    introductionManager.StartGame();
+                    introductionManager.LearnMore();
 
                     nextButton.SetActive(true);
                     waitButton.SetActive(true);

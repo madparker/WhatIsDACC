@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class IntroductionManager : MonoBehaviour
 {
+    [Header("External GameObjects")]
+    [SerializeField] GameObject daccMachine;
+    [SerializeField] Transform daccReady;
+
     [Header("Molecules")]
     [SerializeField] Transform moleculeSpawn;
     [SerializeField] GameObject oxygenPrefab;
@@ -11,27 +15,56 @@ public class IntroductionManager : MonoBehaviour
 
     [Header("UI Objects")]
     [SerializeField] GameObject introductionText;
+    [SerializeField] GameObject startObjects;
+    [SerializeField] GameObject introObjects;
 
     //private variables
     List<GameObject> molecules = new List<GameObject>();
     bool hasStarted = false;
+    bool isIntro = true;
+    bool spawnedMolecules = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Invoke("SpawnMolecule", 0.5f);
+        //Invoke("SpawnMolecule", 0.5f);
+        startObjects.SetActive(true);
+        introObjects.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!isIntro)
+        {
+            if (daccMachine.transform.position != daccReady.position)
+            {
+                daccMachine.transform.position = Vector3.MoveTowards(daccMachine.transform.position, daccReady.position, Time.deltaTime);
+            }
+            else
+            {
+                if(!spawnedMolecules)
+                {
+                    Invoke("SpawnMolecule", 0.5f);
+                    spawnedMolecules = true;
+                }
+            }
+        }
+            
     }
 
     public void StartGame()
     {
+        isIntro = false;
+
+        startObjects.SetActive(false);
+        introObjects.SetActive(true);
+    }
+
+    public void LearnMore()
+    {
         introductionText.SetActive(false);
-        for(int i = 0; i < molecules.Count; i++)
+        for (int i = 0; i < molecules.Count; i++)
         {
             Destroy(molecules[i]);
         }
