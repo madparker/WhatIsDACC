@@ -62,6 +62,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] string releaseTitle;
     [SerializeField][TextArea] string releaseDescription;
 
+    [SerializeField] string tempTitle;
+    [SerializeField][TextArea] string tempDescription;
+
     [SerializeField] string captureTitle;
     [SerializeField][TextArea] string captureDescription;
 
@@ -263,7 +266,7 @@ public class GameManager : MonoBehaviour
                 if (!cameraMover.isMoving && !setUpState)
                 {
                     SetLevelText(true);
-                    SetLevelTextContent(releaseTitle, releaseDescription);
+                    SetLevelTextContent(tempTitle, tempDescription);
 
                     temperatureswingManager.StartMinigame();
                     setUpState = true;
