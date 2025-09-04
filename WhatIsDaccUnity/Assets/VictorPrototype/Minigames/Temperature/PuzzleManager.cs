@@ -10,6 +10,7 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] Material outPieceMaterial;
 
     int filledPiece;
+    public bool isDone;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -66,6 +67,7 @@ public class PuzzleManager : MonoBehaviour
     void EndPuzzle()
     {
         Debug.Log("ended");
+        isDone = true;
         outPiece.GetComponent<MeshRenderer>().material = outPieceMaterial;
     }
 

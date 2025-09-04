@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] MoleculeManager moleculeManager; //On Level 1
     [SerializeField] SorbentManager sorbentManager; //On Level 2
     [SerializeField] HydroswingManager hydroswingManager; //On Level 3-A
+    [SerializeField] TemperatureswingManager temperatureswingManager; //On Level 3-B
     [SerializeField] ElectroswingManager electroswingManager; //On Level 3-C
     [SerializeField] CaptureManager captureManager; //On Level 4
     [SerializeField] AirOutManager airOutManager; //On Level 5
@@ -249,7 +250,7 @@ public class GameManager : MonoBehaviour
                 if (hydroswingManager.currentState == HydroswingManager.STATE.End)
                 {
                     cameraMover.PrecisionUpdateCameraPosition(6);
-                    currentState = STATE.Capture;
+                    currentState = STATE.AirOut;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
 
@@ -258,6 +259,31 @@ public class GameManager : MonoBehaviour
                     boxFront.enabled = true;
                 }
                 break;
+            case STATE.Temp:
+                if (!cameraMover.isMoving && !setUpState)
+                {
+                    SetLevelText(true);
+                    SetLevelTextContent(releaseTitle, releaseDescription);
+
+                    temperatureswingManager.StartMinigame();
+                    setUpState = true;
+                }
+
+
+                if (Input.GetMouseButtonDown(0)) SetDescription(false);
+                if (Input.GetMouseButtonDown(1)) SetDescription(!levelDescriptionContainer.activeInHierarchy);
+
+                if (temperatureswingManager.currentState == TemperatureswingManager.STATE.End)
+                {
+                    cameraMover.PrecisionUpdateCameraPosition(6);
+                    currentState = STATE.AirOut;
+                    SetLevelText(false);
+                    toggleInstructions.SetActive(false);
+
+                    setUpState = false;
+                }
+                break;
+
             case STATE.Electro:
                 if (!cameraMover.isMoving && !setUpState)
                 {
@@ -277,8 +303,6 @@ public class GameManager : MonoBehaviour
 
                     setUpState = false;
                 }
-                break;
-            case STATE.Temp:
                 break;
             case STATE.Capture:
                 if (!cameraMover.isMoving && !setUpState)
