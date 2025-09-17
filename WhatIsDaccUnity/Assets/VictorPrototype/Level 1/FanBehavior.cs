@@ -4,6 +4,8 @@ public class FanBehavior : MonoBehaviour
 {
     [SerializeField] Transform targetTransform;
     [SerializeField] GameObject mouseTracker;
+    [SerializeField] GameObject fanGraphics;
+    [SerializeField] float fanSpeed;
 
     Camera cam;
     Vector3 screenPosition;
@@ -23,6 +25,11 @@ public class FanBehavior : MonoBehaviour
 
         Vector3 targetDirection = targetTransform.position - this.transform.position;
         this.transform.forward = targetDirection.normalized;
+
+        if(Input.GetMouseButton(0))
+        {
+            fanGraphics.transform.Rotate(0, fanSpeed * Time.deltaTime, 0);
+        }
         
     }
 
