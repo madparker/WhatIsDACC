@@ -59,13 +59,18 @@ public class TemperatureswingManager : MonoBehaviour
 
                     if (firstPiece.GetComponent<PuzzleElementBehavior>().isInPosition)
                     {
-                        if(smokeParticles.isStopped) smokeParticles.Play();
-                    } else
-                    {
                         if (smokeParticles.isPlaying) smokeParticles.Stop();
                     }
+                    else
+                    {
+                        if (smokeParticles.isStopped) smokeParticles.Play();
+                    }
+
                 }
-                    break;
+
+                
+
+                break;
             case STATE.End:
                 break;
         }

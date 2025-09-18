@@ -419,9 +419,9 @@ public class GameManager : MonoBehaviour
 
             nextState = true;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha4)) //Electro
+        if(Input.GetKeyDown(KeyCode.Alpha4)) //Temp
         {
-            currentState = STATE.Electro;
+            currentState = STATE.Temp;
             cameraMover.PrecisionUpdateCameraPosition(5);
             introductionManager.StartGame();
 
@@ -436,9 +436,9 @@ public class GameManager : MonoBehaviour
             nextState = true;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) //Temp
+        if (Input.GetKeyDown(KeyCode.Alpha5)) //Electro
         {
-            currentState = STATE.Temp;
+            currentState = STATE.Electro;
             cameraMover.DebugCamera(6);
             introductionManager.StartGame();
 
