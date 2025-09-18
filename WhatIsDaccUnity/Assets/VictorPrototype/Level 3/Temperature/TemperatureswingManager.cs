@@ -5,6 +5,10 @@ public class TemperatureswingManager : MonoBehaviour
     [Header("External GameObjects")]
     [SerializeField] GameObject mouseTracker;
 
+    [Header("Smoke System")]
+    [SerializeField] ParticleSystem smokeParticles;
+    [SerializeField] GameObject firstPiece;
+
     [Header("Puzzle Pieces")]
     [SerializeField] GameObject[] correctPieces;
     [SerializeField] GameObject[] allPieces;
@@ -37,7 +41,6 @@ public class TemperatureswingManager : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(0))
                 {
-
                     int correctCount = 0;
                     for (int i = 0; i < correctPieces.Length; i++)
                     {
@@ -53,9 +56,16 @@ public class TemperatureswingManager : MonoBehaviour
 
                         currentState = STATE.End;
                     }
-                }
 
-                break;
+                    if (firstPiece.GetComponent<PuzzleElementBehavior>().isInPosition)
+                    {
+                        if(smokeParticles.isStopped) smokeParticles.Play();
+                    } else
+                    {
+                        if (smokeParticles.isPlaying) smokeParticles.Stop();
+                    }
+                }
+                    break;
             case STATE.End:
                 break;
         }

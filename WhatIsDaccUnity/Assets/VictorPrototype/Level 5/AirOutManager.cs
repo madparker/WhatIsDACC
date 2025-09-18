@@ -11,6 +11,9 @@ public class AirOutManager : MonoBehaviour
     [Header("Changeable Variables")]
     [SerializeField] float spawnDelay = 5;
 
+    [Header("UI Elements")]
+    [SerializeField] GameObject textbox;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,6 +29,7 @@ public class AirOutManager : MonoBehaviour
     public void SetUp()
     {
         Invoke("SpawnMolecule", spawnDelay);
+        textbox.SetActive(true);
     }
 
     void SpawnMolecule()

@@ -293,7 +293,7 @@ public class GameManager : MonoBehaviour
 
                 if (temperatureswingManager.currentState == TemperatureswingManager.STATE.End)
                 {
-                    cameraMover.PrecisionUpdateCameraPosition(6);
+                    cameraMover.PrecisionUpdateCameraPosition(7);
                     currentState = STATE.AirOut;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
@@ -363,12 +363,18 @@ public class GameManager : MonoBehaviour
         }
 
         //DEBUG
-        if(Input.GetKeyDown(KeyCode.Alpha1)) //HYDRO
+
+        //AIRInSetUP
+        //Absorb
+        //Hydro
+        //Electro
+        //Temp
+        //AirOut
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) //AirInSetUp
         {
-            currentState = STATE.Hydro;
-
-            cameraMover.DebugCamera(3);
-
+            currentState = STATE.AirInSetUp;
+            cameraMover.DebugCamera(2);
             introductionManager.StartGame();
 
             nextState = false;
@@ -381,7 +387,39 @@ public class GameManager : MonoBehaviour
 
             nextState = true;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2)) //Electro
+        if (Input.GetKeyDown(KeyCode.Alpha2)) //Absorb
+        {
+            currentState = STATE.Hydro;
+            cameraMover.DebugCamera(3);
+            introductionManager.StartGame();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) //Hydro
+        {
+            currentState = STATE.Hydro;
+            cameraMover.DebugCamera(4);
+            introductionManager.StartGame();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha4)) //Electro
         {
             currentState = STATE.Electro;
             cameraMover.PrecisionUpdateCameraPosition(5);
@@ -398,10 +436,27 @@ public class GameManager : MonoBehaviour
             nextState = true;
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) //CAPTURE
+        if (Input.GetKeyDown(KeyCode.Alpha5)) //Temp
         {
-            currentState = STATE.Capture;
-            cameraMover.DebugCamera(4);
+            currentState = STATE.Temp;
+            cameraMover.DebugCamera(6);
+            introductionManager.StartGame();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) //AirOut
+        {
+            currentState = STATE.AirOut;
+            cameraMover.DebugCamera(7);
             introductionManager.StartGame();
 
             nextState = false;
