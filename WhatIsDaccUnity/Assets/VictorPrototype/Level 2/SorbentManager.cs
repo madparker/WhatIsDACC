@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SorbentManager : MonoBehaviour
 {
@@ -14,7 +15,12 @@ public class SorbentManager : MonoBehaviour
     [SerializeField] GameObject lastSorbent;
     [SerializeField] float spawnDelay = 5;
 
+    [Header("UI Elements")]
+    [SerializeField] GameObject uiElements;
+    [SerializeField] Slider sorbentFillMeter;
+
     public bool isFull;
+    public float fillCount;
     int carbonCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,12 +32,22 @@ public class SorbentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isFull) isFull = lastSorbent.GetComponent<SorbentBehavior>().currentState == SorbentBehavior.STATE.Full;
+        if (!isFull) {
+            //isFull = lastSorbent.GetComponent<SorbentBehavior>().currentState == SorbentBehavior.STATE.Full;
+            sorbentFillMeter.value = fillCount / 9;
+
+            if(fillCount == 9)
+            {
+                uiElements.SetActive(false);
+                isFull = true;
+            }
+        } 
     }
 
     public void SetUp()
     {
         Invoke("SpawnMolecule", spawnDelay);
+        uiElements.SetActive(true);
         firstSorbent.GetComponent<SorbentBehavior>().currentState = SorbentBehavior.STATE.Ready;
     }
 

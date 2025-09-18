@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SorbentBehavior : MonoBehaviour
 {
+    [SerializeField] SorbentManager manager;
     [SerializeField] Transform[] moleculePlacements;
     [SerializeField] GameObject previousSorbent;
     [SerializeField] bool isLastSorbet;
@@ -58,6 +59,8 @@ public class SorbentBehavior : MonoBehaviour
         molecule.transform.position = moleculePlacements[currentMolecule].transform.position;
         molecule.transform.rotation = moleculePlacements[currentMolecule].transform.rotation;
         currentMolecule++;
+
+        manager.fillCount++;
 
         if (currentMolecule == moleculePlacements.Length) currentState = STATE.Full;
     }
