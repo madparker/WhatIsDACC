@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] HydroswingManager hydroswingManager; //On Level 3-A
     [SerializeField] TemperatureswingManager temperatureswingManager; //On Level 3-B
     [SerializeField] ElectroswingManager electroswingManager; //On Level 3-C
+    [SerializeField] ReleaseManager releaseManager;
     [SerializeField] CaptureManager captureManager; //On Level 4
     [SerializeField] AirOutManager airOutManager; //On Level 5
 
@@ -59,11 +60,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] string[] absorbTitles;
     [SerializeField][TextArea] string[] absorbDescriptions;
 
-    [SerializeField] string releaseTitle;
-    [SerializeField][TextArea] string releaseDescription;
+    [SerializeField] string hydroTitle;
+    [SerializeField][TextArea] string hydroDescription;
 
     [SerializeField] string tempTitle;
     [SerializeField][TextArea] string tempDescription;
+
+    [SerializeField] string releaseTitle;
+    [SerializeField][TextArea] string releaseDescription;
 
     [SerializeField] string captureTitle;
     [SerializeField][TextArea] string captureDescription;
@@ -76,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     public enum STATE
     {
-        Start, Intro, AirInSetUp, AirIn, Absorb, Hydro, Electro, Temp, Capture, AirOut
+        Start, Intro, AirInSetUp, AirIn, Absorb, Choose, Hydro, Electro, Temp, Release, Capture, AirOut
     }
 
     public STATE currentState = STATE.Start;
@@ -209,23 +213,39 @@ public class GameManager : MonoBehaviour
                     setUpState = true;
 
                     sorbentManager.SetUp();
-                    
+
+                    nextButton.SetActive(true);
+                    waitButton.SetActive(true);
                 }
 
                 if(sorbentManager.isFull && !releaseOptions.activeInHierarchy)
                 {
-                    releaseOptions.SetActive(true);
-                    SetDescription(false);
-                    ActivateInteractive(absorbTitles[releaseChoice], absorbDescriptions[releaseChoice]);
-                    toggleInstructions.SetActive(false);
+                    waitButton.SetActive(false);
                 }
 
 
                 if (nextState)
                 {
-                    //cameraMover.UpdateCameraPosition();
+                    releaseOptions.SetActive(true);
+                    SetDescription(false);
+                    ActivateInteractive(absorbTitles[releaseChoice], absorbDescriptions[releaseChoice]);
+                    toggleInstructions.SetActive(false);
+                    sorbentManager.DeactivateUI();
 
-                    switch(releaseChoice)
+                    currentState = STATE.Choose;
+
+                    nextButton.SetActive(false);
+
+                    nextState = false;
+                    setUpState = false;
+                }
+                break;
+
+            case STATE.Choose:
+
+                if(nextState)
+                {
+                    switch (releaseChoice)
                     {
                         case 0:
                             currentState = STATE.Hydro;
@@ -251,12 +271,14 @@ public class GameManager : MonoBehaviour
                     DeactivateInteractive();
                     toggleInstructions.SetActive(false);
                 }
+
                 break;
+
             case STATE.Hydro:
                 if (!cameraMover.isMoving && !setUpState)
                 {
                     SetLevelText(true);
-                    SetLevelTextContent(releaseTitle, releaseDescription);
+                    SetLevelTextContent(hydroTitle, hydroDescription);
 
                     hydroswingManager.NextStep();
                     setUpState = true;
@@ -293,8 +315,8 @@ public class GameManager : MonoBehaviour
 
                 if (temperatureswingManager.currentState == TemperatureswingManager.STATE.End)
                 {
-                    cameraMover.PrecisionUpdateCameraPosition(7);
-                    currentState = STATE.AirOut;
+                    cameraMover.PrecisionUpdateCameraPosition(4);
+                    currentState = STATE.Release;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
 
@@ -314,14 +336,38 @@ public class GameManager : MonoBehaviour
 
                 if(electroswingManager.currentState == ElectroswingManager.STATE.End)
                 {
-                    cameraMover.PrecisionUpdateCameraPosition(7);
-                    currentState = STATE.AirOut;
+                    cameraMover.PrecisionUpdateCameraPosition(4);
+                    currentState = STATE.Release;
                     SetLevelText(false);
                     toggleInstructions.SetActive(false);
 
                     setUpState = false;
                 }
                 break;
+
+            case STATE.Release:
+                if (!cameraMover.isMoving && !setUpState)
+                {
+                    SetLevelText(true);
+                    SetLevelTextContent(releaseTitle, releaseDescription);
+
+                    releaseManager.SetUp();
+                    setUpState = true;
+                }
+
+                if (releaseManager.currentState == ReleaseManager.STATE.End)
+                {
+                    cameraMover.PrecisionUpdateCameraPosition(7);
+                    currentState = STATE.AirOut;
+                    SetLevelText(false);
+                    toggleInstructions.SetActive(false);
+
+                    setUpState = false;
+
+                    boxFront.enabled = true;
+                }
+                break;
+
             case STATE.Capture:
                 if (!cameraMover.isMoving && !setUpState)
                 {
@@ -376,6 +422,7 @@ public class GameManager : MonoBehaviour
             currentState = STATE.AirInSetUp;
             cameraMover.DebugCamera(2);
             introductionManager.StartGame();
+            introductionManager.LearnMore();
 
             nextState = false;
             setUpState = false;
@@ -392,6 +439,7 @@ public class GameManager : MonoBehaviour
             currentState = STATE.Hydro;
             cameraMover.DebugCamera(3);
             introductionManager.StartGame();
+            introductionManager.LearnMore();
 
             nextState = false;
             setUpState = false;
@@ -408,6 +456,7 @@ public class GameManager : MonoBehaviour
             currentState = STATE.Hydro;
             cameraMover.DebugCamera(4);
             introductionManager.StartGame();
+            introductionManager.LearnMore();
 
             nextState = false;
             setUpState = false;
@@ -424,6 +473,7 @@ public class GameManager : MonoBehaviour
             currentState = STATE.Temp;
             cameraMover.PrecisionUpdateCameraPosition(5);
             introductionManager.StartGame();
+            introductionManager.LearnMore();
 
             nextState = false;
             setUpState = false;
@@ -441,6 +491,7 @@ public class GameManager : MonoBehaviour
             currentState = STATE.Electro;
             cameraMover.DebugCamera(6);
             introductionManager.StartGame();
+            introductionManager.LearnMore();
 
             nextState = false;
             setUpState = false;
@@ -458,6 +509,7 @@ public class GameManager : MonoBehaviour
             currentState = STATE.AirOut;
             cameraMover.DebugCamera(7);
             introductionManager.StartGame();
+            introductionManager.LearnMore();
 
             nextState = false;
             setUpState = false;

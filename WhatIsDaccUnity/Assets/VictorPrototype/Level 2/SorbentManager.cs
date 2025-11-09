@@ -38,10 +38,9 @@ public class SorbentManager : MonoBehaviour
 
             if(fillCount == 9)
             {
-                uiElements.SetActive(false);
                 isFull = true;
             }
-        } 
+        }
     }
 
     public void SetUp()
@@ -49,6 +48,11 @@ public class SorbentManager : MonoBehaviour
         Invoke("SpawnMolecule", spawnDelay);
         uiElements.SetActive(true);
         firstSorbent.GetComponent<SorbentBehavior>().currentState = SorbentBehavior.STATE.Ready;
+    }
+
+    public void DeactivateUI()
+    {
+        uiElements.SetActive(false);
     }
 
     void SpawnMolecule()
