@@ -112,7 +112,13 @@ public class HydroswingManager : MonoBehaviour
                     }
                     else
                     {
-                        if(currentSorbent < 2)
+
+                        currentState = STATE.Close;
+
+                        /*
+                         * OLD CODE FROM WHEN THERE WERE MULTIPLE SORBENTS
+                         * 
+                        if (currentSorbent < 2)
                         {
                             currentSorbent++;
 
@@ -124,6 +130,7 @@ public class HydroswingManager : MonoBehaviour
                         {
                             currentState = STATE.Close;
                         }
+                        */
                         
                     }
                 }

@@ -9,6 +9,9 @@ public class WaterSpoutBehavior : MonoBehaviour
     Vector3 screenPosition;
     Vector3 worldPosition;
 
+    [SerializeField] float bufferTime;
+    float bufferTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,13 +26,22 @@ public class WaterSpoutBehavior : MonoBehaviour
         {
             SpawnWater();
         }
+        if (Input.GetMouseButton(0))
+        {
+            bufferTimer += Time.deltaTime;
+            if (bufferTimer > bufferTime)
+            {
+                SpawnWater();
+                bufferTimer = 0;
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Space)) Debug.Log(transform.position.x);
     }
 
     void SpawnWater()
     {
-        Instantiate(waterPrefab, new Vector3(this.transform.position.x - 0.1f, this.transform.position.y - 0.1f, this.transform.position.z - 0.13f), Quaternion.identity);
+        Instantiate(waterPrefab, new Vector3(this.transform.position.x - 0.1f, this.transform.position.y - 0.05f, this.transform.position.z), Quaternion.identity);
     }
 
     void TrackMouse()
@@ -49,7 +61,7 @@ public class WaterSpoutBehavior : MonoBehaviour
             this.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z + 0.15f);
         }
         else {
-            this.transform.position = new Vector3(-0.04f, 1.08f, worldPosition.z + 0.15f);
+            this.transform.position = new Vector3(-0.04f, 1.08f, worldPosition.z);
         }
 
     }
