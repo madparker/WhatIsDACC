@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] string releaseTitle;
     [SerializeField][TextArea] string releaseDescription;
+    [SerializeField][TextArea] string releaseTempDescription;
 
     [SerializeField] string captureTitle;
     [SerializeField][TextArea] string captureDescription;
@@ -349,7 +350,7 @@ public class GameManager : MonoBehaviour
                 if (!cameraMover.isMoving && !setUpState)
                 {
                     SetLevelText(true);
-                    SetLevelTextContent(releaseTitle, releaseDescription);
+                    if(releaseChoice == 1) SetLevelTextContent(releaseTitle, releaseTempDescription); else SetLevelTextContent(releaseTitle, releaseDescription);
 
                     releaseManager.SetUp();
                     setUpState = true;
@@ -405,6 +406,9 @@ public class GameManager : MonoBehaviour
 
                     setUpState = true;
                 }
+
+
+
                 break;
         }
 
@@ -479,6 +483,7 @@ public class GameManager : MonoBehaviour
             setUpState = false;
 
             releaseOptions.SetActive(false);
+            releaseChoice = 1;
 
             SetLevelText(false);
             DeactivateInteractive();
@@ -497,6 +502,7 @@ public class GameManager : MonoBehaviour
             setUpState = false;
 
             releaseOptions.SetActive(false);
+            releaseChoice = 2;
 
             SetLevelText(false);
             DeactivateInteractive();
@@ -530,30 +536,6 @@ public class GameManager : MonoBehaviour
         nextState = true;
     }
 
-    void SetUpNextState(STATE next)
-    {
-        switch(next)
-        {
-            case STATE.AirInSetUp:
-                break;
-            case STATE.AirIn:
-                break;
-            case STATE.Absorb:
-                break;
-            case STATE.Hydro:
-                break;
-            case STATE.Electro:
-                break;
-            case STATE.Temp:
-                break;
-            case STATE.Capture:
-                break;
-            case STATE.AirOut:
-                break;
-
-        }
-    }
-
     void SetLevelText(bool textState)
     {
         levelTitleContainer.SetActive(textState);
@@ -583,7 +565,64 @@ public class GameManager : MonoBehaviour
         interactiveDescriptionContainer.SetActive(false);
     }
 
+    public void LoadMinigame(int gameNum)
+    {
+        if (gameNum == 0) //Hydro
+        {
+            currentState = STATE.Hydro;
+            cameraMover.DebugCamera(4);
+            introductionManager.StartGame();
+            introductionManager.LearnMore();
 
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+        }
+        if (gameNum == 1) //Temp
+        {
+            currentState = STATE.Temp;
+            cameraMover.PrecisionUpdateCameraPosition(5);
+            introductionManager.StartGame();
+            introductionManager.LearnMore();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+
+        }
+        if (gameNum == 2) //Electro
+        {
+            currentState = STATE.Electro;
+            cameraMover.DebugCamera(6);
+            introductionManager.StartGame();
+            introductionManager.LearnMore();
+
+            nextState = false;
+            setUpState = false;
+
+            releaseOptions.SetActive(false);
+
+            SetLevelText(false);
+            DeactivateInteractive();
+
+            nextState = true;
+
+        }
+
+        releaseChoice = gameNum;
+    }
 
     
 

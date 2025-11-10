@@ -1,5 +1,7 @@
 using System.Threading;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class ReleaseManager : MonoBehaviour
 {
@@ -20,11 +22,11 @@ public class ReleaseManager : MonoBehaviour
     [Header("Other")]
     [SerializeField] GameObject uiElements;
     [SerializeField] GameObject waitButton;
+    [SerializeField] Slider releaseSlider;
 
 
     bool isWaiting;
     float waitTimer;
-
 
     public enum STATE
     {
@@ -68,20 +70,29 @@ public class ReleaseManager : MonoBehaviour
                 break;
             case STATE.Active:
 
+
+
+
                 if(isWaiting)
                 {
                     waitTimer += Time.deltaTime;
 
-                    if(waitTimer > 5)
+                    if(waitTimer > 3)
                     {
                         currentState = STATE.Return;
 
                         sorbent.GetComponent<BoxCollider>().isTrigger = true;
                     }
+                } else
+                {
+                    if(releaseSlider.value == 1)
+                    {
+                        ActivateElectricity();
+                    }
                 }
-                
 
-                break;
+
+                    break;
 
             case STATE.Return:
 
