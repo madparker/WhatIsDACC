@@ -49351,7 +49351,7 @@ MonoBehaviour:
     when heated.
   - Using the electro-swing method, the sorbent will absorb CO2 and release it when
     electrified.
-  hydroTitle: Moisture-Swing
+  hydroTitle: Moisture Swing
   hydroDescription: 'Now that the sorbent is full, the CO2 must be released and stored.
     This method uses a sorbent that releases absorbed CO2 when wet.
 
