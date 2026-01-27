@@ -9739,8 +9739,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.6516, y: 242.74695}
-  m_SizeDelta: {x: 301.7, y: 83.0661}
+  m_AnchoredPosition: {x: -10.719, y: 238.79}
+  m_SizeDelta: {x: 268.9499, y: 83.0661}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &241913403
 MonoBehaviour:
@@ -9790,8 +9790,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11944,9 +11944,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
+  m_ScaleFactor: 0.75
   m_ReferenceResolution: {x: 1600, y: 900}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -13353,8 +13353,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.1572, y: 68.65017}
-  m_SizeDelta: {x: 345.867, y: 453.9217}
+  m_AnchoredPosition: {x: -10.718, y: 109.54069}
+  m_SizeDelta: {x: 298.12, y: 372.1406}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &414787637
 MonoBehaviour:
@@ -28146,7 +28146,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use WASD or the buttons to the left to rotate the solar panels.
+  m_text: Use WASD, the arrow keys,  or the buttons to the left to rotate the solar
+    panels.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e14e8d4c50aeb2b409e9a86b0141002c, type: 2}
   m_sharedMaterial: {fileID: 4730643760954918901, guid: e14e8d4c50aeb2b409e9a86b0141002c,
@@ -28174,14 +28175,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -46179,8 +46180,8 @@ RectTransform:
   m_Children:
   - {fileID: 414787636}
   - {fileID: 1287389098}
-  - {fileID: 1174612911}
   - {fileID: 241913402}
+  - {fileID: 1174612911}
   m_Father: {fileID: 662678917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -47387,8 +47388,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.8279, y: 27}
-  m_SizeDelta: {x: 301.35, y: 258.9836}
+  m_AnchoredPosition: {x: -11.9291, y: 40}
+  m_SizeDelta: {x: 257.8369, y: 258.9836}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1174612912
 MonoBehaviour:
@@ -47439,8 +47440,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -50770,8 +50771,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.156, y: 231.1925}
-  m_SizeDelta: {x: 345.87, y: 128.835}
+  m_AnchoredPosition: {x: -10.719, y: 238.79468}
+  m_SizeDelta: {x: 298.12, y: 113.6307}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287389099
 MonoBehaviour:

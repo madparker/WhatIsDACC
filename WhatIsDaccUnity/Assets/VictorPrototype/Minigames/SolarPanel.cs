@@ -26,20 +26,20 @@ public class SolarPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moveLeft || Input.GetKey(KeyCode.A))
+        if (moveLeft || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             solarPanelParent.transform.Rotate(0, parentRotationSpeed * Time.deltaTime, 0);
         }
-        if (moveRight || Input.GetKey(KeyCode.D))
+        if (moveRight || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             solarPanelParent.transform.Rotate(0, -parentRotationSpeed * Time.deltaTime, 0);
         }
 
-        if (moveUp || Input.GetKey(KeyCode.W))
+        if (moveUp || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             panelPivot.transform.Rotate(0, 0, pivotRotationSpeed * Time.deltaTime);
         }
-        if (moveDown || Input.GetKey(KeyCode.S))
+        if (moveDown || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             panelPivot.transform.Rotate(0, 0, -pivotRotationSpeed * Time.deltaTime);
         }
